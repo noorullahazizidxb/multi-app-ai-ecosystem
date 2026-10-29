@@ -1,0 +1,54 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ============================================
+// SHARED USER MODEL (used by all 4 apps)
+// ============================================
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  avatarUrl     String?
+  role          Role      @default(END_USER)
+  themePreset   String    @default("clean-slate")
+  appId         String    // careerforge | kinetic | freelanceos | viralmatrix
+  stripeCustomerId String?
+  copilotActive Boolean   @default(false)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model UsageRecord {
+  id          String   @id @default(cuid())
+  userId      String
+  featureKey  String   // ATS_SCAN, MEAL_SCAN, DOC_GEN, VIDEO_CONVERT, etc.
+  cost        Int      @default(1)
+  periodKey   String   // e.g. "2025-01" for monthly reset
+  createdAt   DateTime @default(now())
+}
+
+model SubscriptionEvent {
+  id        String   @id @default(cuid())
+  userId    String
+  appId     String
+  event     String   // SUBSCRIBED | CANCELLED | RENEWED | PAYMENT_FAILED
+  provider  String   // stripe | revenuecat
+  metadata  String?  // JSON string
+  createdAt DateTime @default(now())
+}
+
+enum Role {
+  SUPER_ADMIN
+  APP_ADMIN
+  SUPPORT_AGENT
+  BILLING_AUDITOR
+  END_USER
+}
+

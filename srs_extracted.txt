@@ -1,0 +1,312 @@
+IEEE 830 / ISO-29148 SOFTWARE REQUIREMENTS SPECIFICATION • ANTIGRAVITY AGENT
+FEED
+Multi-App AI SaaS Ecosystem (Decoupled Monorepo
+Architecture)
+Isolated Backends, Independent Web Domains & Native Flutter Apps Powered by Shared SOLID/DRY Packages
+ARCHITECTURE PATTERN MONETIZATION MODELS DATA LAYER UI & STYLING
+Split-Backend Monorepo Model 1 (Cap) + Model Prisma v7.10/v8 Next.js 15 + Tailwind
+5 (Copilot) (Neon/Turso/MySQL) v4 + Flutter
+1. Executive Summary & Decoupled Topology SYS-ARCH-01
+This Software Requirements Specification (SRS) defines the production architecture for four commercial AI
+applications built inside a single Turborepo + pnpm monorepo. To eliminate single-point-of-failure complexity, prevent
+cross-domain coupling, and enable independent scaling, each application operates its own isolated Next.js 15 web
+frontend, its own dedicated NestJS backend service, and its own standalone Flutter mobile app, while importing 80%
+of core infrastructure from shared workspace packages.
+App Code & Dedicated Web Domain Model 1 (
+Isolated Backend API (VPS Docker) Flutter Mobile Bundle IDs
+Brand (Vercel) (Copilot)
+App 1: careerforge.example.com api.careerforge.example.com iOS: Free: 3 AT
+CareerForge apps/web-resume apps/api-resume (Port 4001) com.org.careerforge rewrites/m
+AI Android: Copilot ($
+(AI Resume com.org.careerforge job applie
+Builder)
+App 2: kinetic.example.com api.kinetic.example.com iOS: Free: 3 AI
+KineticAI apps/web-fitness apps/api-fitness (Port 4002) com.org.kineticai scans/wk
+(AI Fitness Android: Copilot ($
+Coach) com.org.kineticai form coac
+App 3: freelanceos.example.com api.freelanceos.example.com iOS: Free: 5 AI
+FreelanceOS apps/web-freelance apps/api-freelance (Port 4003) com.org.freelanceos proposals
+(Client & Android: Copilot ($
+Scope com.org.freelanceos invoice ch
+Manager)
+App 4: viralmatrix.example.com api.viralmatrix.example.com iOS: Free: 3 vid
+ViralMatrix apps/web-content apps/api-content (Port 4004) com.org.viralmatrix conversio
+AI Android: Copilot ($
+(Content com.org.viralmatrix & auto-po
+Repurposer)
+2. Antigravity Execution Directives & Core Principles SYS-PRIN-02
+Directive for Antigravity Autonomous Agent: Execute scaffolding sequentially: (1) Initialize root workspace (`pnpm-
+workspace.yaml`, `turbo.json`), (2) Build shared TypeScript & Dart packages (`packages/*`), (3) Generate isolated
+NestJS backends (`apps/api-*`), (4) Generate Next.js 15 frontends (`apps/web-*`), and (5) Generate Flutter apps
+(`apps/mobile-*`). Never cross-import between `apps/*`; all shared code must reside in `packages/*`.
+Split-Backend Isolation (KISS): Instead of a monolithic backend where video encoding in ViralMatrix could starve
+CPU threads for FreelanceOS invoicing, each backend (`api-resume`, `api-fitness`, `api-freelance`, `api-content`)
+compiles into its own lightweight container with its own `.env`, port, and Prisma schema namespace.
+SOLID Principles Enforcement: Every NestJS module enforces Single Responsibility (`*.controller.ts` for transport,
+`* i t `f d i l `* it t `f P i i ) O /Cl di f d i d l ti d
+SRS: Multi-App AI Ecosystem (Antigravity Specification) Page 1 of 8
+3. Decoupled Monorepo Directory & Dependency Graph SYS-REPO-03
+The diagram and directory specification below illustrate how the four independent product verticals consume shared
+infrastructure without coupling domain logic or deployment pipelines.
+Vertical 1: CareerForge Vertical 2: KineticAI Vertical 3: FreelanceOS Vertical 4: ViralMatrix
+web-resume • api-resume:4001 web-fitness • api-fitness:4002 web-freelance • api-freelance:4003 web-content • api-content:4004
+mobile_resume (Flutter) mobile_fitness (Flutter) mobile_freelance (Flutter) mobile_content (Flutter)
+Shared Monorepo Core Packages (packages/* — 100% Reusable DRY Modules)
+@repo/db-core (Prisma v8 + Neon/Turso/MySQL) • @repo/backend-core (Redis Quota, RBAC, WS Admin) • @repo/theme-engine (10 Presets) • @repo/flutter-core
+4. Exact Monorepo File Tree for Antigravity Scaffolding SYS-TREE-04
+monorepo-root/ ├── apps/ │ ├── web-resume/ # Next.js 15 (Vercel Domain 1:
+careerforge.com) │ ├── web-fitness/ # Next.js 15 (Vercel Domain 2: kineticai.com) │ ├── web-
+freelance/ # Next.js 15 (Vercel Domain 3: freelanceos.com) │ ├── web-content/ # Next.js 15
+(Vercel Domain 4: viralmatrix.com) │ ├── api-resume/ # NestJS Isolated Backend 1 (Port 4001,
+WS 4101) │ ├── api-fitness/ # NestJS Isolated Backend 2 (Port 4002, WS 4102) │ ├── api-
+freelance/ # NestJS Isolated Backend 3 (Port 4003, WS 4103) │ ├── api-content/ # NestJS
+Isolated Backend 4 (Port 4004, WS 4104 + FFmpeg worker) │ ├── mobile_resume/ # Flutter App 1
+(Bundle: com.org.careerforge) │ ├── mobile_fitness/ # Flutter App 2 (Bundle:
+com.org.kineticai) │ ├── mobile_freelance/ # Flutter App 3 (Bundle: com.org.freelanceos) │
+└── mobile_content/ # Flutter App 4 (Bundle: com.org.viralmatrix) ├── packages/ │ ├── db-
+core/ # Prisma v7.10/v8 Dynamic Adapter Factory (Neon, Turso, MySQL, SQLite) │ ├── backend-
+core/ # Shared NestJS Guards: UsageQuotaGuard, CopilotGuard, AdminWsGateway │ ├── ai-sdk/ #
+Unified @google/genai wrapper with structured JSON & token metering │ ├── theme-engine/ #
+Tailwind v4 @theme CSS + 10 OKLCH Presets + Flutter JSON token exporter │ ├── ui-web/ #
+Shared shadcn/ui (Tailwind v4) components + Live Admin Dashboard UI │ ├── shared-dto/ # Zod
+validation schemas + OpenAPI generator for Flutter clients │ └── flutter_core/ # Shared Dart
+package: Dio client, WebSocket channel, 10-Theme BLoC ├── docker/ │ ├── docker-
+compose.vps.yml # Orchestrates api-1..4, Redis, and optional local DBs on VPS │ └── nginx-
+reverse-proxy.conf# Routes api.<domain>.com to respective container ports 4001-4004 ├──
+turbo.json └── pnpm-workspace.yaml
+Database Isolation Strategy Across Split Backends: Because each backend uses `@repo/db-core`, every app can
+either point to its own dedicated database instance (e.g., 4 separate Neon branches or 4 separate Turso databases)
+OR share a single database cluster using distinct Prisma schema prefixes via environment configuration.
+SRS: Multi-App AI Ecosystem (Antigravity Specification) Page 2 of 8
+5. Master Environment Controller (`.env` Specification) SYS-ENV-05
+Each isolated backend (`apps/api-*`) and web app (`apps/web-*`) reads from a strict, Zod-validated `.env` file. Below
+is the canonical template enabling seamless switching between **Postgres (Neon/Local)**, **SQLite (Turso/Local)**,
+and **MySQL**, plus **Vercel** and **VPS Docker** topologies:
+# ============================================================================ # 1.
+APPLICATION IDENTITY & DOMAIN ROUTING (Configured per App 1..4) #
+============================================================================
+APP_ID="careerforge" # Options: careerforge | kinetic | freelanceos | viralmatrix
+NODE_ENV="production" DEPLOY_TARGET="hybrid" # "vercel-serverless" | "vps-docker" | "hybrid"
+WEB_ORIGIN_URL="https://careerforge.example.com"
+API_PUBLIC_URL="https://api.careerforge.example.com" PORT=4001 WS_PORT=4101 #
+============================================================================ # 2. DYNAMIC
+DATABASE SELECTOR (PRISMA v7.10 / v8) #
+============================================================================ # Allowed
+values: "postgres" | "neon" | "sqlite" | "turso" | "mysql" DB_DIALECT="neon"
+DATABASE_URL="postgresql://user:pass@ep-cool-fog-123.us-east-2.aws.neon.tech/careerforge_db?
+sslmode=require" # Used automatically when DB_DIALECT="turso" (libSQL edge / SQLite
+compatible) TURSO_DATABASE_URL="libsql://careerforge-org.turso.io"
+TURSO_AUTH_TOKEN="eyJhbGciOiJFZERTQSI..." # Used automatically when DB_DIALECT="mysql"
+MYSQL_DATABASE_URL="mysql://root:secret@mysql-vps:3306/careerforge_db" #
+============================================================================ # 3. REDIS
+PUB/SUB, USAGE-CAP RATE LIMITING & WEBSOCKETS #
+============================================================================
+REDIS_URL="redis://:redis_super_secret@redis-vps:6379/0" # DB /0..3 per app
+ENABLE_LIVE_ADMIN_WS="true" #
+============================================================================ # 4. AI ENGINE,
+MONETIZATION CAPS & THEME ENGINE #
+============================================================================
+GEMINI_API_KEY="AIzaSyYourGeminiKeyHere" GEMINI_MODEL_FAST="gemini-2.5-flash"
+GEMINI_MODEL_COPILOT="gemini-2.5-pro" FREE_MONTHLY_QUOTA=5
+COPILOT_STRIPE_PRICE_ID="price_1Pqxyz..." DEFAULT_THEME="obsidian-gold"
+6. Multi-Database Prisma v8 Factory (`@repo/db-core`) SYS-DB-06
+To satisfy **Dependency Inversion** and **KISS**, business services never write raw SQL. A prebuild script
+(`scripts/sync-prisma-provider.ts`) sets the `datasource db` provider in `schema.prisma` (`postgresql`, `sqlite`, or
+`mysql`) from `DB_DIALECT`, and `DynamicPrismaService` instantiates the right driver adapter at boot:
+// packages/db-core/src/dynamic-prisma.service.ts import { Injectable, OnModuleInit,
+OnModuleDestroy } from '@nestjs/common'; import { PrismaClient } from '@prisma/client';
+import { PrismaNeon } from '@prisma/adapter-neon'; import { Pool } from
+'@neondatabase/serverless'; import { PrismaLibSQL } from '@prisma/adapter-libsql'; import {
+createClient } from '@libsql/client'; @Injectable() export class DynamicPrismaService
+extends PrismaClient implements OnModuleInit, OnModuleDestroy { constructor() { const
+dialect = process.env.DB_DIALECT || 'postgres'; if (dialect === 'neon') { const pool = new
+Pool({ connectionString: process.env.DATABASE_URL }); super({ adapter: new PrismaNeon(pool)
+}); } else if (dialect === 'turso') { const libsql = createClient({ url:
+process.env.TURSO_DATABASE_URL!, authToken: process.env.TURSO_AUTH_TOKEN, }); super({
+adapter: new PrismaLibSQL(libsql) }); } else { // Native Prisma connection for standard
+PostgreSQL, MySQL, or local file:./dev.db SQLite super({ datasources: { db: { url:
+process.env.DATABASE_URL } } }); } } async onModuleInit() { await this.$connect(); } async
+onModuleDestroy() { await this.$disconnect(); } }
+SRS: Multi-App AI Ecosystem (Antigravity Specification) Page 3 of 8
+7. Theme Appearance Manager (`@repo/theme-engine`) SYS-THM-07
+All four web apps (Tailwind CSS v4 `@theme` native CSS variables) and all four Flutter apps (`ThemeData` generated
+from shared JSON tokens) ship with **10 pre-defined OKLCH theme presets**. Users or admins can switch themes
+instantaneously without page reloads, persisted in `User.themePreset` and cached in Redis.
+Preset ID (`data- `--bg` (Surface `--primary` (Brand `--accent` Default For
+# Visual Persona
+theme`) Base) Action) (Highlight) App
+1 clean-slate Executive oklch(0.98 oklch(0.55 oklch(0.65 CareerForge
+Daylight 0.005 240) 0.22 260) 0.18 200) AI
+2 obsidian-gold Luxury Dark oklch(0.12 oklch(0.78 oklch(0.65 FreelanceOS
+Mode 0.010 260) 0.16 85) 0.14 70)
+3 cyber-neon High-Energy oklch(0.10 oklch(0.80 oklch(0.70 KineticAI
+Dark 0.020 280) 0.25 155) 0.28 330)
+4 synthwave- Creator Studio oklch(0.16 oklch(0.70 oklch(0.78 ViralMatrix AI
+sunset Dark 0.060 300) 0.26 350) 0.20 60)
+5 nord-frost Arctic Minimal oklch(0.29 oklch(0.72 oklch(0.65 All Apps
+Dark 0.030 250) 0.10 215) 0.12 240)
+6 matcha-forest Organic Calm oklch(0.96 oklch(0.52 oklch(0.68 All Apps
+Light 0.020 130) 0.14 145) 0.12 95)
+7 solarized-warm Low-Eye-Strain oklch(0.95 oklch(0.58 oklch(0.55 All Apps
+Cream 0.035 85) 0.16 45) 0.15 195)
+8 crimson- High-Contrast oklch(0.14 oklch(0.60 oklch(0.75 All Apps
+executive Onyx 0.015 20) 0.23 25) 0.12 50)
+9 ocean-abyss Deep Maritime oklch(0.13 oklch(0.68 oklch(0.75 All Apps
+Blue 0.040 245) 0.18 210) 0.16 175)
+10 rose-quartz Modern Pastel oklch(0.97 oklch(0.62 oklch(0.70 All Apps
+Light 0.015 350) 0.19 355) 0.14 320)
+8. Real-Time Admin Dashboard, Roles & Redis Guards SYS-ADM-08
+RBAC & Live WebSocket Telemetry Model 1 & Model 5 Enforcement Guards
+5 Role Levels: SUPER_ADMIN (cross-app control), Model 1 (`UsageQuotaGuard`): Reads
+APP_ADMIN (single domain admin), `@UseQuota(featureKey, cost)` metadata. Uses an
+SUPPORT_AGENT, BILLING_AUDITOR, and atomic Redis Lua script (`INCRBY` + `EXPIRE` at
+END_USER. month/week boundary) to verify free allowance
+WebSocket Namespace (`/admin-ws`): Powered by before invoking Gemini AI. Returns HTTP 402
+`@nestjs/websockets` and `@socket.io/redis- Payment Required with upgrade payload when
+adapter`. depleted.
+Live Admin Stream: Streams real-time events Model 5 (`CopilotProGuard`): Protects autonomous
+(`QUOTA_HIT`, `COPILOT_SUBSCRIBED`, background agents (BullMQ queues, email chasers,
+`AI_LATENCY_MS`, `ACTIVE_USERS`) to the auto-schedulers). Validates active
+`/admin` dashboard route on each Next.js frontend Stripe/RevenueCat entitlement in Redis cache
+and Flutter admin view. (`sub:status:{userId}`) before allowing execution.
+Remote Kill-Switch & Override: Admins can adjust a
+user's free quota cap or toggle maintenance mode
+live via WebSocket command emission.
+SRS: Multi-App AI Ecosystem (Antigravity Specification) Page 4 of 8
+9. App 1 SRS: CareerForge AI (Resume Builder & Job Copilot) APP-SPEC-01
+Deployment Targets: Web: apps/web-resume (Vercel) • Backend: apps/api-resume (Port 4001) • Mobile:
+apps/mobile_resume (iOS/Android).
+Tier /
+Feature Set & Functional Requirements Key Packages (Web / API / Flutter)
+Module
+Model 1: • FR-1.1: Unlimited manual resume editing with live A4/Letter preview. Web: @react-pdf/renderer,
+Free Tier • FR-1.2: 3 Free AI ATS Keyword & Gap Scans per month against @dnd-kit/core, tiptap
+(Usage- pasted job descriptions. API: pdf-parse, mammoth
+Capped AI) • FR-1.3: 5 Free STAR-method bullet-point rewrites per month using
+Gemini 2.5 Flash.
+Model 5: • FR-1.4 (Autonomous Tailor): Generates a bespoke resume variant + API: @google/genai, bullmq,
+Copilot cover letter per target job URL in one click. puppeteer-core
+($19/mo • FR-1.5 (Voice Interview Prep): Real-time voice mock interviewer on Flutter: printing, pdf,
+Add-On) Flutter & Web that grades answers against the target company's speech_to_text, flutter_bloc
+rubric.
+• FR-1.6 (Auto-Tracker): BullMQ worker monitors application
+statuses and schedules follow-up emails.
+9.1 API Endpoints & WebSocket Events (`apps/api-resume`)
+POST /api/v1/resumes/parse — Uploads existing PDF/DOCX resume and extracts structured JSON schema.
+POST /api/v1/resumes/:id/ats-scan — Guarded by @UseQuota('ATS_SCAN', 1); returns 0–100 match
+score & missing keywords.
+POST /api/v1/copilot/tailor-job — Guarded by @RequireCopilot(); queues autonomous tailoring job
+and streams progress via WebSocket event resume.tailor.progress.
+9.2 Domain Prisma Schema Excerpt (`apps/api-resume/prisma/schema.prisma`)
+model ResumeDocument { id String @id @default(cuid()) userId String title String
+templateId String @default("executive-modern") themePreset String @default("clean-slate")
+sectionsJson String // Serialized JSON compatible across Postgres, MySQL, and Turso SQLite
+atsScore Int? createdAt DateTime @default(now()) updatedAt DateTime @updatedAt } model
+CopilotJobApplication { id String @id @default(cuid()) userId String companyName String
+jobUrl String tailoredPdfUrl String? status String @default("QUEUED") // QUEUED | TAILORED |
+APPLIED | FOLLOW_UP_SENT }
+SRS: Multi-App AI Ecosystem (Antigravity Specification) Page 5 of 8
+10. App 2 SRS: KineticAI (AI Fitness & Biomechanics Coach) APP-SPEC-02
+Deployment Targets: Web: apps/web-fitness (Vercel) • Backend: apps/api-fitness (Port 4002) • Mobile:
+apps/mobile_fitness (iOS/Android).
+Tier /
+Feature Set & Functional Requirements Key Packages (Web / API / Flutter)
+Module
+Model 1: • FR-2.1: Unlimited manual workout logging, rest timer, and Web: recharts, @tanstack/react-table
+Free Tier 1RM progression charts. Flutter: fl_chart, image_picker, isar
+(Usage- • FR-2.2: 3 Free AI Workout Split Generations per week
+Capped AI) tailored to available gym equipment.
+• FR-2.3: 3 Free Multimodal Meal Photo Scans per week
+(estimates calories, protein, carbs, fats).
+Model 5: • FR-2.4 (30FPS Camera Form Coach): On-device skeletal Flutter: google_mlkit_pose_detection,
+Copilot pose tracking counts reps, measures joint angles (e.g., squat camera, health, flutter_tts
+($14/mo depth), and speaks real-time audio corrections. API: @nestjs/schedule, @google/genai
+Add-On) • FR-2.5 (Biometric Auto-Regulation): Syncs sleep/HRV from
+Apple Health / Health Connect and autonomously adjusts
+daily target weights and macro targets every morning at
+06:00 local time.
+10.1 API Endpoints & WebSocket Events (`apps/api-fitness`)
+POST /api/v1/nutrition/meal-scan — Guarded by @UseQuota('MEAL_SCAN', 1); accepts image
+buffer, calls Gemini Vision, and returns macro breakdown JSON.
+POST /api/v1/copilot/biometric-sync — Guarded by @RequireCopilot(); ingests sleep/HRV payload
+from Flutter app and recalculates current microcycle training volume.
+WS /fitness-live — Streams live trainer/client telemetry and syncs active workout sets across mobile and
+web dashboard in under 50ms.
+10.2 Domain Prisma Schema Excerpt (`apps/api-fitness/prisma/schema.prisma`)
+model WorkoutSession { id String @id @default(cuid()) userId String programName String
+readinessScore Int? // Computed by Copilot from HRV & Sleep hours exercisesJson String //
+Sets, reps, RPE, and camera form accuracy score (0-100) completedAt DateTime @default(now())
+} model MealLog { id String @id @default(cuid()) userId String photoUrl String? calories Int
+proteinGrams Int carbsGrams Int fatGrams Int aiConfidence Float @default(0.95) }
+SRS: Multi-App AI Ecosystem (Antigravity Specification) Page 6 of 8
+11. App 3 SRS: FreelanceOS (Workspace & Client Copilot) APP-SPEC-03
+Deployment Targets: Web: apps/web-freelance (Vercel) • Backend: apps/api-freelance (Port 4003) • Mobile:
+apps/mobile_freelance (iOS/Android).
+Tier /
+Feature Set & Functional Requirements Key Packages (Web / API / Flutter)
+Module
+Model 1: • FR-3.1: Unlimited manual CRM clients, Kanban task boards, Web: react-signature-canvas,
+Free Tier and offline mobile time tracking. @tanstack/react-query
+(Usage- • FR-3.2: Up to 5 Free AI generations/month across Proposals, Flutter:
+Capped AI) Legal Contracts, or Milestone Invoices. google_mlkit_text_recognition, isar
+• FR-3.3: 5 Free Mobile Receipt OCR scans per month for tax
+deduction categorization.
+Model 5: • FR-3.4 (Scope-Creep Shield): Evaluates incoming client API: stripe, nodemailer, pdfkit, bullmq
+Copilot emails/messages against the signed contract SOW Flutter: flutter_stripe, share_plus
+($24/mo embeddings; flags out-of-scope requests and auto-drafts a
+Add-On) polite change-order quote.
+• FR-3.5 (Autonomous Collections Agent): Sends polite,
+escalating payment reminders with Stripe pay links for overdue
+invoices automatically.
+11.1 API Endpoints & WebSocket Events (`apps/api-freelance`)
+POST /api/v1/contracts/generate — Guarded by @UseQuota('DOC_GEN', 1); generates legally
+structured SOW contract from project brief.
+POST /api/v1/copilot/analyze-scope — Guarded by @RequireCopilot(); compares client message
+against signed contract deliverables and outputs scope deviation percentage + change-order draft.
+POST /api/v1/webhooks/stripe — Processes invoice payments and broadcasts live revenue alerts to the
+freelancer's mobile app and Admin Dashboard.
+11.2 Domain Prisma Schema Excerpt (`apps/api-freelance/prisma/schema.prisma`)
+model ClientContract { id String @id @default(cuid()) freelancerId String clientName
+String clientEmail String deliverablesJson String // Structured SOW items used by Scope-
+Creep Shield hourlyRateCents Int signedAt DateTime? } model InvoiceRecord { id String @id
+@default(cuid()) contractId String amountCents Int dueDate DateTime status String
+@default("ISSUED") // ISSUED | OVERDUE | CHASING | PAID copilotChaseCount Int @default(0) }
+SRS: Multi-App AI Ecosystem (Antigravity Specification) Page 7 of 8
+12. App 4 SRS: ViralMatrix AI (Content & Social Repurposer) APP-SPEC-04
+Deployment Targets: Web: apps/web-content (Vercel) • Backend: apps/api-content (Port 4004) • Mobile:
+apps/mobile_content (iOS/Android).
+Tier /
+Feature Set & Functional Requirements Key Packages (Web / API / Flutter)
+Module
+Model 1: • FR-4.1: Convert up to 3 long-form YouTube URLs or uploaded Web: @remotion/player,
+Free Tier videos per month into 5 viral hooks, X threads, and LinkedIn posts. wavesurfer.js, uppy
+(Usage- • FR-4.2: Export watermarked 60-second vertical clips with word- API: fluent-ffmpeg, @aws-
+Capped AI) level captions. sdk/client-s3
+Model 5: • FR-4.3 (9:16 Active-Speaker Reframing): Autonomous face- API: bullmq, @google/genai
+Copilot tracking crops 16:9 video into 9:16 vertical shorts with watermark- Flutter: video_player,
+($29/mo free animated captions. ffmpeg_kit_flutter, share_plus
+Add-On) • FR-4.4 (Omnichannel Auto-Publisher): Schedules and publishes
+directly to TikTok, Reels, YouTube Shorts, and X at peak
+engagement hours.
+13. Multi-Backend VPS `docker-compose.vps.yml` & Antigravity
+SYS-DEP-
+Checklist 09
+# docker/docker-compose.vps.yml — Deploys all 4 isolated backends + Redis on a single
+VPS services: redis-core: image: redis:7-alpine command: redis-server --requirepass
+${REDIS_PASSWORD} --appendonly yes ports: ["6379:6379"] api-resume: build: { context: ..,
+dockerfile: apps/api-resume/Dockerfile } env_file: ../apps/api-resume/.env ports:
+["4001:4001", "4101:4101"] depends_on: [redis-core] api-fitness: build: { context: ..,
+dockerfile: apps/api-fitness/Dockerfile } env_file: ../apps/api-fitness/.env ports:
+["4002:4002", "4102:4102"] depends_on: [redis-core] api-freelance: build: { context: ..,
+dockerfile: apps/api-freelance/Dockerfile } env_file: ../apps/api-freelance/.env ports:
+["4003:4003", "4103:4103"] depends_on: [redis-core] api-content: build: { context: ..,
+dockerfile: apps/api-content/Dockerfile } env_file: ../apps/api-content/.env ports:
+["4004:4004", "4104:4104"] depends_on: [redis-core]
+Antigravity Verification & Acceptance Sequence:
+1. Run pnpm install && pnpm --filter @repo/db-core db:generate to validate dynamic Prisma v8
+driver adapters across Neon, Turso, and MySQL.
+2. Verify all 10 OKLCH themes render identically in Next.js 15 (`@repo/theme-engine/theme.css`) and Flutter
+(`@repo/flutter_core/theme_bloc.dart`).
+3. Start `docker compose -f docker/docker-compose.vps.yml up -d` and verify isolated health checks on ports `4001`,
+`4002`, `4003`, and `4004` plus WebSocket admin streams on `4101–4104`.
+SRS: Multi-App AI Ecosystem (Antigravity Specification) Page 8 of 8

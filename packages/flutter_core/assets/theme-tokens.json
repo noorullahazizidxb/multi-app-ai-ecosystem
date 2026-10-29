@@ -1,0 +1,183 @@
+[
+  {
+    "id": "clean-slate",
+    "name": "Clean Slate",
+    "persona": "Executive Daylight",
+    "defaultFor": "careerforge",
+    "colors": {
+      "bg": "#FAFAFC",
+      "primary": "#4F46E5",
+      "accent": "#06B6D4",
+      "surface": "#F3F4F6",
+      "text": "#111827",
+      "textMuted": "#6B7280",
+      "border": "#E5E7EB",
+      "error": "#EF4444",
+      "success": "#10B981",
+      "warning": "#F59E0B"
+    }
+  },
+  {
+    "id": "obsidian-gold",
+    "name": "Obsidian Gold",
+    "persona": "Luxury Dark Mode",
+    "defaultFor": "freelanceos",
+    "colors": {
+      "bg": "#0D0E12",
+      "primary": "#D4AF37",
+      "accent": "#F3E5AB",
+      "surface": "#161820",
+      "text": "#F9FAFB",
+      "textMuted": "#9CA3AF",
+      "border": "#262938",
+      "error": "#EF4444",
+      "success": "#10B981",
+      "warning": "#F59E0B"
+    }
+  },
+  {
+    "id": "cyber-neon",
+    "name": "Cyber Neon",
+    "persona": "High-Energy Dark",
+    "defaultFor": "kinetic",
+    "colors": {
+      "bg": "#08090C",
+      "primary": "#00FF88",
+      "accent": "#FF007F",
+      "surface": "#12151D",
+      "text": "#FFFFFF",
+      "textMuted": "#8E9AA8",
+      "border": "#1E2433",
+      "error": "#FF3366",
+      "success": "#00FF88",
+      "warning": "#FFCC00"
+    }
+  },
+  {
+    "id": "synthwave-sunset",
+    "name": "Synthwave Sunset",
+    "persona": "Creator Studio Dark",
+    "defaultFor": "viralmatrix",
+    "colors": {
+      "bg": "#140D1D",
+      "primary": "#FF2E93",
+      "accent": "#FF8A00",
+      "surface": "#201430",
+      "text": "#FFFFFF",
+      "textMuted": "#B49DBF",
+      "border": "#3B2256",
+      "error": "#FF3366",
+      "success": "#00E676",
+      "warning": "#FFD600"
+    }
+  },
+  {
+    "id": "nord-frost",
+    "name": "Nord Frost",
+    "persona": "Arctic Minimal Dark",
+    "defaultFor": "all",
+    "colors": {
+      "bg": "#2E3440",
+      "primary": "#88C0D0",
+      "accent": "#81A1C1",
+      "surface": "#3B4252",
+      "text": "#ECEFF4",
+      "textMuted": "#D8DEE9",
+      "border": "#4C566A",
+      "error": "#BF616A",
+      "success": "#A3BE8C",
+      "warning": "#EBCB8B"
+    }
+  },
+  {
+    "id": "matcha-forest",
+    "name": "Matcha Forest",
+    "persona": "Organic Calm Light",
+    "defaultFor": "all",
+    "colors": {
+      "bg": "#F5F7F4",
+      "primary": "#2D6A4F",
+      "accent": "#52B788",
+      "surface": "#E8ECE6",
+      "text": "#1B4332",
+      "textMuted": "#52796F",
+      "border": "#D2DDD0",
+      "error": "#D90429",
+      "success": "#2D6A4F",
+      "warning": "#E76F51"
+    }
+  },
+  {
+    "id": "solarized-warm",
+    "name": "Solarized Warm",
+    "persona": "Low-Eye-Strain Cream",
+    "defaultFor": "all",
+    "colors": {
+      "bg": "#FDF6E3",
+      "primary": "#B58900",
+      "accent": "#268BD2",
+      "surface": "#EEE8D5",
+      "text": "#073642",
+      "textMuted": "#586E75",
+      "border": "#E0D7C2",
+      "error": "#DC322F",
+      "success": "#859900",
+      "warning": "#CB4B16"
+    }
+  },
+  {
+    "id": "crimson-executive",
+    "name": "Crimson Executive",
+    "persona": "High-Contrast Onyx",
+    "defaultFor": "all",
+    "colors": {
+      "bg": "#120B0D",
+      "primary": "#DC2626",
+      "accent": "#F87171",
+      "surface": "#1E1216",
+      "text": "#FFFFFF",
+      "textMuted": "#9CA3AF",
+      "border": "#361D24",
+      "error": "#EF4444",
+      "success": "#10B981",
+      "warning": "#F59E0B"
+    }
+  },
+  {
+    "id": "ocean-abyss",
+    "name": "Ocean Abyss",
+    "persona": "Deep Maritime Blue",
+    "defaultFor": "all",
+    "colors": {
+      "bg": "#0A1118",
+      "primary": "#0284C7",
+      "accent": "#38BDF8",
+      "surface": "#111C26",
+      "text": "#F0F9FF",
+      "textMuted": "#7DD3FC",
+      "border": "#1E3347",
+      "error": "#F43F5E",
+      "success": "#10B981",
+      "warning": "#FBBF24"
+    }
+  },
+  {
+    "id": "rose-quartz",
+    "name": "Rose Quartz",
+    "persona": "Modern Pastel Light",
+    "defaultFor": "all",
+    "colors": {
+      "bg": "#FFF7F9",
+      "primary": "#E11D48",
+      "accent": "#FB7185",
+      "surface": "#FFE4E9",
+      "text": "#4C0519",
+      "textMuted": "#9F1239",
+      "border": "#FECDD6",
+      "error": "#E11D48",
+      "success": "#059669",
+      "warning": "#D97706"
+    }
+  }
+]
+

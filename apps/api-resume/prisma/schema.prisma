@@ -1,0 +1,33 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ResumeDocument {
+  id           String   @id @default(cuid())
+  userId       String
+  title        String
+  templateId   String   @default("executive-modern")
+  themePreset  String   @default("clean-slate")
+  sectionsJson String   // Serialized JSON compatible across Postgres, MySQL, and Turso SQLite
+  atsScore     Int?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model CopilotJobApplication {
+  id             String   @id @default(cuid())
+  userId         String
+  companyName    String
+  jobUrl         String
+  tailoredPdfUrl String?
+  status         String   @default("QUEUED") // QUEUED | TAILORED | APPLIED | FOLLOW_UP_SENT
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+}
+

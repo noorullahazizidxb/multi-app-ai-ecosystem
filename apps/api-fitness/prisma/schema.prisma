@@ -1,0 +1,31 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model WorkoutSession {
+  id              String   @id @default(cuid())
+  userId          String
+  programName     String
+  readinessScore  Int?     // Computed by Copilot from HRV & Sleep hours
+  exercisesJson   String   // Sets, reps, RPE, and camera form accuracy score (0-100)
+  completedAt     DateTime @default(now())
+}
+
+model MealLog {
+  id           String   @id @default(cuid())
+  userId       String
+  photoUrl     String?
+  calories     Int
+  proteinGrams Int
+  carbsGrams   Int
+  fatGrams     Int
+  aiConfidence Float    @default(0.95)
+  createdAt    DateTime @default(now())
+}
+

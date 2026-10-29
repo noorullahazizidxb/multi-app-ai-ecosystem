@@ -1,0 +1,35 @@
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model ClientContract {
+  id               String          @id @default(cuid())
+  freelancerId     String
+  clientName       String
+  clientEmail      String
+  deliverablesJson String          // Structured SOW items used by Scope-Creep Shield
+  hourlyRateCents  Int
+  signedAt         DateTime?
+  invoices         InvoiceRecord[]
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+}
+
+model InvoiceRecord {
+  id               String         @id @default(cuid())
+  contractId       String
+  contract         ClientContract @relation(fields: [contractId], references: [id], onDelete: Cascade)
+  amountCents      Int
+  dueDate          DateTime
+  status           String         @default("ISSUED") // ISSUED | OVERDUE | CHASING | PAID
+  copilotChaseCount Int            @default(0)
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+}
+

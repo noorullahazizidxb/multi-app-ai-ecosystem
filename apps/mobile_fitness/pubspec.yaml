@@ -1,0 +1,24 @@
+name: mobile_fitness
+description: KineticAI Flutter Mobile App (30FPS Pose Detection & Biomechanics Coach)
+version: 1.0.0+1
+publish_to: 'none'
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: '>=3.20.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^9.0.0
+  flutter_core:
+    path: ../../packages/flutter_core
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^5.0.0
+
+flutter:
+  uses-material-design: true
+
