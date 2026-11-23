@@ -1,0 +1,82 @@
+[
+  {
+    "name": "careerforge",
+    "type": "CNAME",
+    "ttl": 14400,
+    "records": [
+      {
+        "content": "e85bb6690192ca1a.vercel-dns-017.com."
+      }
+    ]
+  },
+  {
+    "name": "kinetic",
+    "type": "CNAME",
+    "ttl": 14400,
+    "records": [
+      {
+        "content": "aab76a1198f44605.vercel-dns-017.com."
+      }
+    ]
+  },
+  {
+    "name": "freelanceos",
+    "type": "CNAME",
+    "ttl": 14400,
+    "records": [
+      {
+        "content": "e0aa6d87eda890b7.vercel-dns-017.com."
+      }
+    ]
+  },
+  {
+    "name": "viralmatrix",
+    "type": "CNAME",
+    "ttl": 14400,
+    "records": [
+      {
+        "content": "a41cda6e12580850.vercel-dns-017.com."
+      }
+    ]
+  },
+  {
+    "name": "api-careerforge",
+    "type": "A",
+    "ttl": 14400,
+    "records": [
+      {
+        "content": "127.0.0.1"
+      }
+    ]
+  },
+  {
+    "name": "api-kinetic",
+    "type": "A",
+    "ttl": 14400,
+    "records": [
+      {
+        "content": "127.0.0.1"
+      }
+    ]
+  },
+  {
+    "name": "api-freelanceos",
+    "type": "A",
+    "ttl": 14400,
+    "records": [
+      {
+        "content": "127.0.0.1"
+      }
+    ]
+  },
+  {
+    "name": "api-viralmatrix",
+    "type": "A",
+    "ttl": 14400,
+    "records": [
+      {
+        "content": "127.0.0.1"
+      }
+    ]
+  }
+]
