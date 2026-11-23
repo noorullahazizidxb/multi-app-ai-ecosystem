@@ -1,8 +1,6 @@
 {
-  "buildCommand": "cd ../.. && pnpm install && pnpm turbo build --filter=@app/web-content...",
+  "buildCommand": "pnpm turbo build --filter=@app/web-content...",
   "outputDirectory": "apps/web-content/.next",
-  "installCommand": "cd ../.. && pnpm install",
-  "framework": "nextjs",
-  "rewrites": [],
-  "headers": []
+  "installCommand": "corepack enable && pnpm install --no-frozen-lockfile",
+  "framework": "nextjs"
 }
