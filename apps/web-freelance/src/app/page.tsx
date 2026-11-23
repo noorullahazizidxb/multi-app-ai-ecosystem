@@ -11,8 +11,10 @@ import {
   CardFooter,
   Badge,
   Input,
-  ThemeSwitcher,
   Tabs,
+  AppShell,
+  AppearanceManager,
+  LayoutProvider,
 } from '@repo/ui-web';
 import Link from 'next/link';
 
@@ -107,27 +109,27 @@ export default function FreelanceOSPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[--bg] text-[--text] p-6 lg:p-12 max-w-7xl mx-auto flex flex-col gap-8">
-      <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[--border] pb-6">
-        <div>
-          <div className="flex items-center gap-3">
-            <h1 className="text-3xl font-extrabold tracking-tight">FreelanceOS</h1>
-            <Badge variant="default">Model 1: 5 Free AI Docs/Mo</Badge>
+    <LayoutProvider>
+      <AppShell appId="freelanceos">
+        <div className="flex flex-col gap-6">
+          {/* Header Banner */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl border border-[--border] bg-[--surface]/60 backdrop-blur-sm">
+            <div>
+              <div className="flex items-center gap-3">
+                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[--text]">FreelanceOS</h1>
+                <Badge variant="default">Model 1: 5 Free AI Docs/Mo</Badge>
+              </div>
+              <p className="text-xs sm:text-sm text-[--text-muted] mt-1">
+                Autonomous Client CRM, Scope-Creep Shield & Collections Agent ($24/mo)
+              </p>
+            </div>
+            <div className="flex items-center gap-2">
+              <Button variant="default" size="sm" className="shadow-sm">Upgrade to Copilot Pro</Button>
+            </div>
           </div>
-          <p className="text-sm text-[--text-muted] mt-1">
-            Autonomous Client CRM, Scope-Creep Shield & Collections Agent ($24/mo)
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <Link href="/admin">
-            <Button variant="outline" size="sm">Admin Telemetry</Button>
-          </Link>
-          <Button variant="default" size="sm">Upgrade to Copilot Pro</Button>
-        </div>
-      </header>
 
-      {/* Theme Presets Switcher */}
-      <ThemeSwitcher currentTheme="obsidian-gold" />
+          {/* Appearance & Workspace Manager */}
+          <AppearanceManager currentTheme="obsidian-gold" />
 
               {/* Tabs */}
               <Tabs
@@ -322,5 +324,7 @@ export default function FreelanceOSPage() {
         ]}
       />
         </div>
-        );
+      </AppShell>
+    </LayoutProvider>
+  );
 }

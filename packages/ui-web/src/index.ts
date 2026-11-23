@@ -34,3 +34,20 @@ export type { DialogProps } from './components/dialog';
 
 export { Progress } from './components/progress';
 export type { ProgressProps } from './components/progress';
+
+// Appearance & Layout Management (SYS-THM-07 & Workspace Customization)
+export { LayoutProvider, useLayout, LayoutManager } from './components/layout-manager';
+export type {
+  LayoutConfig,
+  LayoutDensity,
+  LayoutWidth,
+  NavStyle,
+  SurfaceStyle,
+  LayoutManagerProps,
+} from './components/layout-manager';
+
+export { AppearanceManager } from './components/appearance-manager';
+export type { AppearanceManagerProps } from './components/appearance-manager';
+
+export { AppShell, ECOSYSTEM_APPS } from './components/app-shell';
+export type { AppShellProps, AppConfig } from './components/app-shell';

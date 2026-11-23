@@ -11,9 +11,11 @@ import {
   CardFooter,
   Badge,
   Input,
-  ThemeSwitcher,
   Tabs,
   Progress,
+  AppShell,
+  AppearanceManager,
+  LayoutProvider,
 } from '@repo/ui-web';
 import Link from 'next/link';
 
@@ -101,27 +103,27 @@ Passionate engineer with 8+ years architecting high-scale cloud-native SaaS ecos
     };
 
     return (
-      <div className="min-h-screen bg-[--bg] text-[--text] p-6 lg:p-12 max-w-7xl mx-auto flex flex-col gap-8">
-        <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border-b border-[--border] pb-6">
-          <div>
-            <div className="flex items-center gap-3">
-              <h1 className="text-3xl font-extrabold tracking-tight">CareerForge AI</h1>
-              <Badge variant="default">Model 1: 3 Free Scans/Mo</Badge>
+      <LayoutProvider>
+        <AppShell appId="careerforge">
+          <div className="flex flex-col gap-6">
+            {/* Header Banner */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl border border-[--border] bg-[--surface]/60 backdrop-blur-sm">
+              <div>
+                <div className="flex items-center gap-3">
+                  <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[--text]">CareerForge AI</h1>
+                  <Badge variant="default">Model 1: 3 Free Scans/Mo</Badge>
+                </div>
+                <p className="text-xs sm:text-sm text-[--text-muted] mt-1">
+                  Executive Resume Builder, Voice Mock Interview Prep & Job Copilot ($19/mo)
+                </p>
+              </div>
+              <div className="flex items-center gap-2">
+                <Button variant="default" size="sm" className="shadow-sm">Upgrade to Copilot Pro</Button>
+              </div>
             </div>
-            <p className="text-sm text-[--text-muted] mt-1">
-              Executive Resume Builder, Voice Mock Interview Prep & Job Copilot ($19/mo)
-            </p>
-          </div>
-          <div className="flex items-center gap-3">
-            <Link href="/admin">
-              <Button variant="outline" size="sm">Admin Telemetry</Button>
-            </Link>
-            <Button variant="default" size="sm">Upgrade to Copilot Pro</Button>
-          </div>
-        </header>
 
-        {/* Theme Presets Switcher */}
-        <ThemeSwitcher currentTheme="clean-slate" />
+            {/* Appearance & Workspace Manager */}
+            <AppearanceManager currentTheme="clean-slate" />
 
             {/* Modern Tabs Navigation */}
             <Tabs
@@ -372,6 +374,8 @@ Passionate engineer with 8+ years architecting high-scale cloud-native SaaS ecos
           },
         ]}
       />
-            </div>
-            );
+          </div>
+        </AppShell>
+      </LayoutProvider>
+    );
 }

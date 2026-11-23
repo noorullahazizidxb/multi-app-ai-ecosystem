@@ -13,3 +13,5 @@ coverage/
 .dart_tool/
 .packages
 pubspec.lock
+.gradle/
+*.lock

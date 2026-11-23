@@ -1,6 +1,8 @@
 {
-  "buildCommand": "pnpm turbo build --filter=@app/web-resume...",
+  "buildCommand": "cd ../.. && pnpm install && pnpm turbo build --filter=@app/web-resume...",
   "outputDirectory": "apps/web-resume/.next",
-  "installCommand": "pnpm install --frozen-lockfile",
-  "framework": "nextjs"
+  "installCommand": "cd ../.. && pnpm install",
+  "framework": "nextjs",
+  "rewrites": [],
+  "headers": []
 }
