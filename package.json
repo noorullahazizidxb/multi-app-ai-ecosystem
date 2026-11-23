@@ -11,6 +11,9 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,css,md}\""
   },
   "devDependencies": {
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "turbo": "^2.5.0",
     "prettier": "^3.5.0",
     "@types/node": "^22.0.0",
