@@ -1,0 +1,6 @@
+{
+  "buildCommand": "pnpm turbo build --filter=@app/web-fitness...",
+  "outputDirectory": "apps/web-fitness/.next",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "framework": "nextjs"
+}

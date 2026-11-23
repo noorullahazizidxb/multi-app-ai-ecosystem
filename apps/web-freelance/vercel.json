@@ -1,0 +1,6 @@
+{
+  "buildCommand": "pnpm turbo build --filter=@app/web-freelance...",
+  "outputDirectory": "apps/web-freelance/.next",
+  "installCommand": "pnpm install --frozen-lockfile",
+  "framework": "nextjs"
+}
