@@ -15,6 +15,7 @@
   "scripts": {
     "build": "tsc --noEmit",
     "clean": "rm -rf dist",
+    "generate:css": "tsx scripts/generate-theme-css.ts",
     "export:flutter": "tsx scripts/export-flutter-tokens.ts",
     "lint": "eslint src/"
   },

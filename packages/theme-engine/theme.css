@@ -1,10 +1,10 @@
 /* ============================================
  * @repo/theme-engine — Auto-generated Theme CSS
  * 10 OKLCH Presets for Tailwind CSS v4
- * DO NOT EDIT MANUALLY — regenerate with: pnpm --filter @repo/theme-engine build
+ * DO NOT EDIT MANUALLY — regenerate with: pnpm --filter @repo/theme-engine generate:css
  * ============================================ */
 
-@theme {
+@theme inline {
   --color-bg: var(--bg);
   --color-primary: var(--primary);
   --color-accent: var(--accent);
@@ -17,7 +17,10 @@
   --color-warning: var(--warning);
 }
 
+@custom-variant dark (&:where([data-theme="obsidian-gold"], [data-theme="obsidian-gold"] *, [data-theme="cyber-neon"], [data-theme="cyber-neon"] *, [data-theme="synthwave-sunset"], [data-theme="synthwave-sunset"] *, [data-theme="nord-frost"], [data-theme="nord-frost"] *, [data-theme="crimson-executive"], [data-theme="crimson-executive"] *, [data-theme="ocean-abyss"], [data-theme="ocean-abyss"] *));
+
 [data-theme="clean-slate"] {
+  color-scheme: light;
   --bg: oklch(0.98 0.005 240);
   --primary: oklch(0.55 0.22 260);
   --accent: oklch(0.65 0.18 200);
@@ -31,6 +34,7 @@
 }
 
 [data-theme="obsidian-gold"] {
+  color-scheme: dark;
   --bg: oklch(0.12 0.010 260);
   --primary: oklch(0.78 0.16 85);
   --accent: oklch(0.65 0.14 70);
@@ -44,6 +48,7 @@
 }
 
 [data-theme="cyber-neon"] {
+  color-scheme: dark;
   --bg: oklch(0.10 0.020 280);
   --primary: oklch(0.80 0.25 155);
   --accent: oklch(0.70 0.28 330);
@@ -57,6 +62,7 @@
 }
 
 [data-theme="synthwave-sunset"] {
+  color-scheme: dark;
   --bg: oklch(0.16 0.060 300);
   --primary: oklch(0.70 0.26 350);
   --accent: oklch(0.78 0.20 60);
@@ -70,6 +76,7 @@
 }
 
 [data-theme="nord-frost"] {
+  color-scheme: dark;
   --bg: oklch(0.29 0.030 250);
   --primary: oklch(0.72 0.10 215);
   --accent: oklch(0.65 0.12 240);
@@ -83,6 +90,7 @@
 }
 
 [data-theme="matcha-forest"] {
+  color-scheme: light;
   --bg: oklch(0.96 0.020 130);
   --primary: oklch(0.52 0.14 145);
   --accent: oklch(0.68 0.12 95);
@@ -96,6 +104,7 @@
 }
 
 [data-theme="solarized-warm"] {
+  color-scheme: light;
   --bg: oklch(0.95 0.035 85);
   --primary: oklch(0.58 0.16 45);
   --accent: oklch(0.55 0.15 195);
@@ -109,6 +118,7 @@
 }
 
 [data-theme="crimson-executive"] {
+  color-scheme: dark;
   --bg: oklch(0.14 0.015 20);
   --primary: oklch(0.60 0.23 25);
   --accent: oklch(0.75 0.12 50);
@@ -122,6 +132,7 @@
 }
 
 [data-theme="ocean-abyss"] {
+  color-scheme: dark;
   --bg: oklch(0.13 0.040 245);
   --primary: oklch(0.68 0.18 210);
   --accent: oklch(0.75 0.16 175);
@@ -135,6 +146,7 @@
 }
 
 [data-theme="rose-quartz"] {
+  color-scheme: light;
   --bg: oklch(0.97 0.015 350);
   --primary: oklch(0.62 0.19 355);
   --accent: oklch(0.70 0.14 320);

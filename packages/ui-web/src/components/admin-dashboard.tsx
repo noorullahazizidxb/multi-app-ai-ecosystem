@@ -24,6 +24,20 @@ export interface AdminDashboardProps {
   className?: string;
 }
 
+/**
+ * Formats the time in the viewer's locale and time zone. Rendered only after mount so the
+ * prerendered HTML (server locale/time zone) never conflicts with the client during hydration.
+ */
+function EventTime({ timestamp }: { timestamp: string }) {
+  const [label, setLabel] = React.useState('');
+
+  React.useEffect(() => {
+    setLabel(new Date(timestamp).toLocaleTimeString());
+  }, [timestamp]);
+
+  return <span className="text-xs text-text-muted">{label}</span>;
+}
+
 export function AdminDashboard({
   appId,
   initialEvents = [],
@@ -49,14 +63,14 @@ export function AdminDashboard({
 
   return (
     <div className={cn('flex flex-col gap-6', className)}>
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h2 className="text-3xl font-bold tracking-tight text-[--text]">Admin Telemetry</h2>
-          <p className="text-sm text-[--text-muted]">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-text">Admin Telemetry</h2>
+          <p className="text-sm text-text-muted">
             Real-time WebSocket & Redis Quota Oversight for {appId}
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <Badge variant={maintenance ? 'destructive' : 'success'}>
             {maintenance ? 'Maintenance Mode Active' : 'System Operational'}
           </Badge>
@@ -73,31 +87,31 @@ export function AdminDashboard({
       <div className="grid gap-4 md:grid-cols-3">
         <Card>
           <CardHeader>
-            <CardTitle className="text-base text-[--text-muted]">Active Users</CardTitle>
+            <CardTitle className="text-base text-text-muted">Active Users</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-4xl font-extrabold text-[--primary]">{activeUsers}</p>
-            <p className="text-xs text-[--text-muted] mt-1">Live WebSocket Connections</p>
+            <p className="text-4xl font-extrabold text-primary">{activeUsers}</p>
+            <p className="text-xs text-text-muted mt-1">Live WebSocket Connections</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-base text-[--text-muted]">Quota Caps Hit</CardTitle>
+            <CardTitle className="text-base text-text-muted">Quota Caps Hit</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-4xl font-extrabold text-[--warning]">{quotaHitsToday}</p>
-            <p className="text-xs text-[--text-muted] mt-1">HTTP 402 Upgrade Prompts Triggered</p>
+            <p className="text-4xl font-extrabold text-warning">{quotaHitsToday}</p>
+            <p className="text-xs text-text-muted mt-1">HTTP 402 Upgrade Prompts Triggered</p>
           </CardContent>
         </Card>
 
         <Card>
           <CardHeader>
-            <CardTitle className="text-base text-[--text-muted]">Gemini Latency (p95)</CardTitle>
+            <CardTitle className="text-base text-text-muted">Gemini Latency (p95)</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className="text-4xl font-extrabold text-[--accent]">{avgLatencyMs}ms</p>
-            <p className="text-xs text-[--text-muted] mt-1">Token Metering Active</p>
+            <p className="text-4xl font-extrabold text-accent">{avgLatencyMs}ms</p>
+            <p className="text-xs text-text-muted mt-1">Token Metering Active</p>
           </CardContent>
         </Card>
       </div>
@@ -109,16 +123,16 @@ export function AdminDashboard({
         <CardContent>
           <div className="space-y-2 max-h-96 overflow-y-auto pr-2">
             {events.length === 0 ? (
-              <p className="text-sm text-[--text-muted] py-4 text-center">
+              <p className="text-sm text-text-muted py-4 text-center">
                 Listening for live telemetric events from Redis Pub/Sub...
               </p>
             ) : (
               events.map((evt, idx) => (
                 <div
                   key={idx}
-                  className="flex items-center justify-between rounded-lg border border-[--border] p-3 text-sm bg-[--bg]"
+                  className="flex flex-wrap items-center justify-between gap-2 rounded-lg border border-border p-3 text-sm bg-bg"
                 >
-                  <div className="flex items-center gap-3">
+                  <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1">
                     <Badge
                       variant={
                         evt.type === 'QUOTA_HIT'
@@ -130,14 +144,12 @@ export function AdminDashboard({
                     >
                       {evt.type}
                     </Badge>
-                    <span className="font-medium text-[--text]">{evt.appId}</span>
+                    <span className="font-medium text-text">{evt.appId}</span>
                     {evt.userId && (
-                      <span className="text-xs text-[--text-muted] font-mono">{evt.userId}</span>
+                      <span className="text-xs text-text-muted font-mono">{evt.userId}</span>
                     )}
                   </div>
-                  <span className="text-xs text-[--text-muted]">
-                    {new Date(evt.timestamp).toLocaleTimeString()}
-                  </span>
+                  <EventTime timestamp={evt.timestamp} />
                 </div>
               ))
             )}

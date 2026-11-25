@@ -80,13 +80,13 @@ const handleReframe = () => {
       <AppShell appId="viralmatrix">
         <div className="flex flex-col gap-6">
           {/* Header Banner */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl border border-[--border] bg-[--surface]/60 backdrop-blur-sm">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl border border-border bg-surface/60 backdrop-blur-sm">
             <div>
               <div className="flex items-center gap-3">
-                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[--text]">ViralMatrix AI</h1>
+                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-text">ViralMatrix AI</h1>
                 <Badge variant="default">Model 1: 3 Free Conversions/Mo</Badge>
               </div>
-              <p className="text-xs sm:text-sm text-[--text-muted] mt-1">
+              <p className="text-xs sm:text-sm text-text-muted mt-1">
                 Omnichannel Content Repurposer, 9:16 Active-Speaker Reframer & Publisher ($29/mo)
               </p>
             </div>
@@ -128,15 +128,15 @@ const handleReframe = () => {
 
                 {repurposedData && (
                   <div className="flex flex-col gap-4">
-                    <Card className="border-[--primary]/40">
+                    <Card className="border-primary/40">
                       <CardHeader>
-                        <CardTitle className="text-base text-[--primary]">5 Viral High-CTR Hooks</CardTitle>
+                        <CardTitle className="text-base text-primary">5 Viral High-CTR Hooks</CardTitle>
                       </CardHeader>
                       <CardContent>
                         <ul className="text-xs space-y-2">
                           {repurposedData.viralHooks.map((h: string, i: number) => (
-                            <li key={i} className="flex gap-2 p-2 rounded bg-[--surface] border border-[--border]">
-                              <span className="text-[--accent] font-bold">#{i + 1}</span>
+                            <li key={i} className="flex gap-2 p-2 rounded bg-surface border border-border">
+                              <span className="text-accent font-bold">#{i + 1}</span>
                               <span>{h}</span>
                             </li>
                           ))}
@@ -144,13 +144,13 @@ const handleReframe = () => {
                       </CardContent>
                     </Card>
 
-                    <Card className="border-[--accent]/40">
+                    <Card className="border-accent/40">
                       <CardHeader>
-                        <CardTitle className="text-base text-[--accent]">6-Part X (Twitter) Thread</CardTitle>
+                        <CardTitle className="text-base text-accent">6-Part X (Twitter) Thread</CardTitle>
                       </CardHeader>
-                      <CardContent className="text-xs space-y-1.5 text-[--text-muted]">
+                      <CardContent className="text-xs space-y-1.5 text-text-muted">
                         {repurposedData.xThread.map((tweet: string, i: number) => (
-                          <p key={i} className="p-2 rounded bg-[--surface] border border-[--border] text-[--text]">
+                          <p key={i} className="p-2 rounded bg-surface border border-border text-text">
                             {tweet}
                           </p>
                         ))}
@@ -165,7 +165,7 @@ const handleReframe = () => {
             id: 'reframer',
             label: 'FR-4.3: 9:16 Active-Speaker Reframing (Copilot)',
             content: (
-              <Card className="mt-2 border-[--primary]/40 shadow-xl">
+              <Card className="mt-2 border-primary/40 shadow-xl">
                 <CardHeader>
                   <div className="flex justify-between items-center">
                     <div>
@@ -176,7 +176,7 @@ const handleReframe = () => {
                   </div>
                 </CardHeader>
                 <CardContent className="flex flex-col lg:flex-row gap-8 items-center justify-center py-4">
-                  <div className="aspect-[9/16] w-56 rounded-2xl border-4 border-[--primary] bg-black/90 p-4 flex flex-col justify-between text-white relative shadow-2xl">
+                  <div className="aspect-[9/16] w-56 rounded-2xl border-4 border-primary bg-black/90 p-4 flex flex-col justify-between text-white relative shadow-2xl">
                     <div className="flex justify-between items-center text-[10px]">
                       <Badge variant="success">9:16 HD 60FPS</Badge>
                       <span className="text-gray-400">00:45</span>
@@ -187,7 +187,7 @@ const handleReframe = () => {
                       {reframing && (
                         <div className="mt-4">
                           <Progress value={reframeProgress} className="w-full" />
-                          <p className="text-[10px] text-[--accent] mt-2 animate-pulse">
+                          <p className="text-[10px] text-accent mt-2 animate-pulse">
                             Tracking speaker centroid & applying kinetic captions...
                           </p>
                         </div>
@@ -203,14 +203,14 @@ const handleReframe = () => {
                   </div>
 
                   <div className="flex flex-col gap-4 max-w-md">
-                    <p className="text-xs text-[--text-muted]">
+                    <p className="text-xs text-text-muted">
                       FFmpeg background queue isolates the primary speaker, tracks facial coordinates, and renders TikTok/Reels compatible vertical video with dynamic word-by-word highlighted captions.
                     </p>
                     <Button onClick={handleReframe} disabled={reframing}>
                       {reframing ? 'Rendering via FFmpeg Worker...' : 'Render 9:16 Reframed Short'}
                     </Button>
                     {reframedShort && (
-                      <div className="p-3 rounded-lg border border-[--success] bg-[--surface] text-xs text-[--success] flex items-center justify-between">
+                      <div className="p-3 rounded-lg border border-success bg-surface text-xs text-success flex items-center justify-between">
                         <span>✅ 9:16 Short Ready for Export</span>
                         <Button size="sm" variant="default">Download MP4</Button>
                       </div>
@@ -224,7 +224,7 @@ const handleReframe = () => {
           id: 'publisher',
         label: 'FR-4.4: Omnichannel Auto-Publisher',
         content: (
-        <Card className="mt-2 border-[--primary]/40">
+        <Card className="mt-2 border-primary/40">
           <CardHeader>
             <div className="flex justify-between items-center">
               <div>
@@ -239,11 +239,11 @@ const handleReframe = () => {
               {scheduledPosts.map((post) => (
                 <div
                   key={post.platform}
-                  className="flex items-center justify-between p-4 rounded-lg border border-[--border] bg-[--surface]"
+                  className="flex items-center justify-between p-4 rounded-lg border border-border bg-surface"
                 >
                   <div>
                     <p className="font-bold text-sm">{post.platform}</p>
-                    <p className="text-xs text-[--text-muted]">{post.account} • Scheduled: {post.time}</p>
+                    <p className="text-xs text-text-muted">{post.account} • Scheduled: {post.time}</p>
                   </div>
                   <Badge variant="outline">{post.status}</Badge>
                 </div>

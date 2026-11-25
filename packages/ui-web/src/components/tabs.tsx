@@ -24,17 +24,20 @@ export function Tabs({ tabs, defaultTabId, className, onTabChange }: TabsProps) 
 
   return (
     <div className={cn('flex flex-col gap-4', className)}>
-      <div className="flex border-b border-[--border] gap-2">
+      {/* Scrolls horizontally on narrow screens; the inset shadow draws the baseline under the active tab border. */}
+      <div role="tablist" className="flex gap-2 overflow-x-auto shadow-[inset_0_-1px_0_var(--color-border)]">
         {tabs.map((tab) => (
           <button
             key={tab.id}
             type="button"
+            role="tab"
+            aria-selected={activeTab === tab.id}
             onClick={() => handleSelect(tab.id)}
             className={cn(
-              'px-4 py-2 text-sm font-medium border-b-2 transition-all cursor-pointer -mb-px',
+              'shrink-0 whitespace-nowrap px-4 py-2 text-sm font-medium border-b-2 transition-all cursor-pointer',
               activeTab === tab.id
-                ? 'border-[--primary] text-[--primary] font-semibold'
-                : 'border-transparent text-[--text-muted] hover:text-[--text] hover:border-[--border]',
+                ? 'border-primary text-primary font-semibold'
+                : 'border-transparent text-text-muted hover:text-text hover:border-border',
             )}
           >
             {tab.label}

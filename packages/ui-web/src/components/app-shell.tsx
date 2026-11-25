@@ -2,6 +2,7 @@
 
 import * as React from 'react';
 import Link from 'next/link';
+import { LayoutGrid } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Badge } from './badge';
 import { Button } from './button';
@@ -70,24 +71,27 @@ export function AppShell({ appId, children, activeNav = 'app', className }: AppS
   const [ecosystemMenuOpen, setEcosystemMenuOpen] = React.useState(false);
 
   return (
-    <div className={cn('min-h-screen bg-[--bg] text-[--text] flex flex-col font-sans transition-colors duration-200', className)}>
+    <div className={cn('min-h-screen bg-bg text-text flex flex-col font-sans transition-colors duration-200', className)}>
       {/* Top Navigation Bar */}
-      <header className="sticky top-0 z-40 w-full border-b border-[--border] bg-[--surface]/80 backdrop-blur-md">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
+      <header className="sticky top-0 z-40 w-full border-b border-border bg-surface/80 backdrop-blur-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-2 sm:gap-4">
           {/* Brand Identity & App Switcher */}
-          <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[--primary] flex items-center justify-center text-white font-black text-sm shadow-sm">
+          <div className="flex min-w-0 items-center gap-2 sm:gap-3">
+            <Link href="/" className="flex min-w-0 items-center gap-2.5">
+              <div
+                aria-hidden="true"
+                className="w-8 h-8 shrink-0 rounded-lg bg-blue-600 dark:bg-orange-500 flex items-center justify-center text-white dark:text-orange-950 font-black text-sm shadow-sm"
+              >
                 {currentApp.name.charAt(0)}
               </div>
-              <div className="flex flex-col">
+              <div className="flex min-w-0 flex-col">
                 <div className="flex items-center gap-2">
-                  <span className="font-bold text-sm tracking-tight text-[--text]">{currentApp.name}</span>
+                  <span className="truncate font-bold text-sm tracking-tight text-text">{currentApp.name}</span>
                   <Badge variant="outline" className="hidden sm:inline-flex text-[10px] py-0 px-1.5 font-mono">
                     {currentApp.subdomain}
                   </Badge>
                 </div>
-                <span className="text-[11px] text-[--text-muted] hidden md:inline">{currentApp.tagline}</span>
+                <span className="text-[11px] text-text-muted hidden md:inline">{currentApp.tagline}</span>
               </div>
             </Link>
 
@@ -96,19 +100,22 @@ export function AppShell({ appId, children, activeNav = 'app', className }: AppS
               <button
                 type="button"
                 onClick={() => setEcosystemMenuOpen(!ecosystemMenuOpen)}
-                className="text-xs px-2 py-1 rounded-md border border-[--border] hover:bg-[--bg] text-[--text-muted] hover:text-[--text] transition-colors flex items-center gap-1 cursor-pointer"
+                className="text-xs h-8 px-2 rounded-md border border-border hover:bg-bg text-text-muted hover:text-text transition-colors flex items-center gap-1 cursor-pointer"
                 title="Switch Ecosystem App"
+                aria-label="Switch Ecosystem App"
+                aria-expanded={ecosystemMenuOpen}
               >
-                <span>Apps</span>
-                <span className="text-[9px]">▼</span>
+                <LayoutGrid aria-hidden="true" className="size-3.5" />
+                <span className="hidden sm:inline">Apps</span>
+                <span aria-hidden="true" className="hidden sm:inline text-[9px]">▼</span>
               </button>
 
               {ecosystemMenuOpen && (
                 <div
-                  className="absolute left-0 mt-2 w-64 rounded-xl border border-[--border] bg-[--surface] shadow-xl p-2 z-50 flex flex-col gap-1"
+                  className="absolute left-0 mt-2 w-64 rounded-xl border border-border bg-surface shadow-xl p-2 z-50 flex flex-col gap-1"
                   onClick={() => setEcosystemMenuOpen(false)}
                 >
-                  <div className="px-2 py-1 text-[11px] font-semibold text-[--text-muted] uppercase tracking-wider">
+                  <div className="px-2 py-1 text-[11px] font-semibold text-text-muted uppercase tracking-wider">
                     Ecosystem Verticals
                   </div>
                   {Object.values(ECOSYSTEM_APPS).map((app) => (
@@ -116,13 +123,13 @@ export function AppShell({ appId, children, activeNav = 'app', className }: AppS
                       key={app.id}
                       href={`https://${app.subdomain}`}
                       className={cn(
-                        'flex items-center justify-between p-2 rounded-lg text-xs transition-colors hover:bg-[--bg]',
-                        app.id === appId ? 'bg-[--primary]/10 text-[--primary] font-semibold' : 'text-[--text]',
+                        'flex items-center justify-between p-2 rounded-lg text-xs transition-colors hover:bg-bg',
+                        app.id === appId ? 'bg-primary/10 text-primary font-semibold' : 'text-text',
                       )}
                     >
                       <div className="flex flex-col">
                         <span>{app.name}</span>
-                        <span className="text-[10px] text-[--text-muted]">{app.subdomain}</span>
+                        <span className="text-[10px] text-text-muted">{app.subdomain}</span>
                       </div>
                       <Badge variant="secondary" className="text-[10px]">
                         {app.copilotPrice}
@@ -135,12 +142,12 @@ export function AppShell({ appId, children, activeNav = 'app', className }: AppS
           </div>
 
           {/* Center / Right Navigation Controls */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="flex shrink-0 items-center gap-2 sm:gap-3">
             {/* Free Quota / Model 1 Indicator */}
-            <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-[--border] bg-[--bg] text-xs">
-              <span className="w-2 h-2 rounded-full bg-[--success]"></span>
-              <span className="text-[--text-muted]">Free Tier:</span>
-              <strong className="text-[--text]">{currentApp.freeQuotaLabel}</strong>
+            <div className="hidden lg:flex items-center gap-1.5 px-2.5 py-1 rounded-full border border-border bg-bg text-xs">
+              <span className="w-2 h-2 rounded-full bg-success"></span>
+              <span className="text-text-muted">Free Tier:</span>
+              <strong className="text-text">{currentApp.freeQuotaLabel}</strong>
             </div>
 
             {/* Admin WS Telemetry Route */}
@@ -150,8 +157,10 @@ export function AppShell({ appId, children, activeNav = 'app', className }: AppS
                 size="sm"
                 className="text-xs gap-1.5 h-8"
               >
-                <span className="w-1.5 h-1.5 rounded-full bg-[--accent] animate-pulse"></span>
-                <span>Live Admin</span>
+                <span className="w-1.5 h-1.5 rounded-full bg-accent animate-pulse"></span>
+                <span>
+                  <span className="hidden sm:inline">Live </span>Admin
+                </span>
               </Button>
             </Link>
 
@@ -160,7 +169,7 @@ export function AppShell({ appId, children, activeNav = 'app', className }: AppS
               variant="outline"
               size="sm"
               onClick={() => setAppearanceOpen(true)}
-              className="text-xs gap-1.5 h-8 border-[--primary]/40 hover:border-[--primary]"
+              className="text-xs gap-1.5 h-8 border-primary/40 hover:border-primary"
               title="Theme & Layout Management"
             >
               <span>🎨</span>
@@ -176,9 +185,9 @@ export function AppShell({ appId, children, activeNav = 'app', className }: AppS
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[--border] bg-[--surface]/40 py-6 text-center text-xs text-[--text-muted]">
+      <footer className="border-t border-border bg-surface/40 py-6 text-center text-xs text-text-muted">
         <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-2">
-          <span>Unified Multi-App AI Ecosystem • Domain: <strong className="text-[--text]">devminds.net</strong></span>
+          <span>Unified Multi-App AI Ecosystem • Domain: <strong className="text-text">devminds.net</strong></span>
           <div className="flex items-center gap-3">
             <span>Turborepo + pnpm</span>
             <span>•</span>

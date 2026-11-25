@@ -1,0 +1,12 @@
+/* Shared Tailwind CSS v4 entry for every web app. Import once from each app's globals.css. */
+@import "tailwindcss";
+@import "@repo/theme-engine/theme.css";
+
+/* Apps are scanned automatically from their own root; the shared components live outside it. */
+@source "./src";
+
+@layer base {
+  body {
+    @apply min-h-screen bg-bg font-sans text-text antialiased;
+  }
+}
