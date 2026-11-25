@@ -15,3 +15,7 @@ coverage/
 pubspec.lock
 .gradle/
 *.lock
+.flutter-plugins
+.flutter-plugins-dependencies
+**/android/local.properties
+**/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
