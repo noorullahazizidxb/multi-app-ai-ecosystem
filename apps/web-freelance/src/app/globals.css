@@ -1,15 +1,1 @@
-@import '@repo/theme-engine/theme.css';
-
-:root {
-  color-scheme: light dark;
-}
-
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-  min-height: 100vh;
-  margin: 0;
-  padding: 0;
-}
-
+@import "@repo/ui-web/styles.css";

@@ -1,7 +1,11 @@
+export type ColorScheme = 'light' | 'dark';
+
 export interface ThemePreset {
   id: string;
   name: string;
   persona: string;
+  /** Whether the preset is a light or dark palette; drives `color-scheme` and Tailwind's `dark:` variant. */
+  scheme: ColorScheme;
   defaultFor: string;
   colors: {
     bg: string;
@@ -22,6 +26,7 @@ export const THEME_PRESETS: readonly ThemePreset[] = [
     id: 'clean-slate',
     name: 'Clean Slate',
     persona: 'Executive Daylight',
+    scheme: 'light',
     defaultFor: 'careerforge',
     colors: {
       bg: 'oklch(0.98 0.005 240)',
@@ -40,6 +45,7 @@ export const THEME_PRESETS: readonly ThemePreset[] = [
     id: 'obsidian-gold',
     name: 'Obsidian Gold',
     persona: 'Luxury Dark Mode',
+    scheme: 'dark',
     defaultFor: 'freelanceos',
     colors: {
       bg: 'oklch(0.12 0.010 260)',
@@ -58,6 +64,7 @@ export const THEME_PRESETS: readonly ThemePreset[] = [
     id: 'cyber-neon',
     name: 'Cyber Neon',
     persona: 'High-Energy Dark',
+    scheme: 'dark',
     defaultFor: 'kinetic',
     colors: {
       bg: 'oklch(0.10 0.020 280)',
@@ -76,6 +83,7 @@ export const THEME_PRESETS: readonly ThemePreset[] = [
     id: 'synthwave-sunset',
     name: 'Synthwave Sunset',
     persona: 'Creator Studio Dark',
+    scheme: 'dark',
     defaultFor: 'viralmatrix',
     colors: {
       bg: 'oklch(0.16 0.060 300)',
@@ -94,6 +102,7 @@ export const THEME_PRESETS: readonly ThemePreset[] = [
     id: 'nord-frost',
     name: 'Nord Frost',
     persona: 'Arctic Minimal Dark',
+    scheme: 'dark',
     defaultFor: 'all',
     colors: {
       bg: 'oklch(0.29 0.030 250)',
@@ -112,6 +121,7 @@ export const THEME_PRESETS: readonly ThemePreset[] = [
     id: 'matcha-forest',
     name: 'Matcha Forest',
     persona: 'Organic Calm Light',
+    scheme: 'light',
     defaultFor: 'all',
     colors: {
       bg: 'oklch(0.96 0.020 130)',
@@ -130,6 +140,7 @@ export const THEME_PRESETS: readonly ThemePreset[] = [
     id: 'solarized-warm',
     name: 'Solarized Warm',
     persona: 'Low-Eye-Strain Cream',
+    scheme: 'light',
     defaultFor: 'all',
     colors: {
       bg: 'oklch(0.95 0.035 85)',
@@ -148,6 +159,7 @@ export const THEME_PRESETS: readonly ThemePreset[] = [
     id: 'crimson-executive',
     name: 'Crimson Executive',
     persona: 'High-Contrast Onyx',
+    scheme: 'dark',
     defaultFor: 'all',
     colors: {
       bg: 'oklch(0.14 0.015 20)',
@@ -166,6 +178,7 @@ export const THEME_PRESETS: readonly ThemePreset[] = [
     id: 'ocean-abyss',
     name: 'Ocean Abyss',
     persona: 'Deep Maritime Blue',
+    scheme: 'dark',
     defaultFor: 'all',
     colors: {
       bg: 'oklch(0.13 0.040 245)',
@@ -184,6 +197,7 @@ export const THEME_PRESETS: readonly ThemePreset[] = [
     id: 'rose-quartz',
     name: 'Rose Quartz',
     persona: 'Modern Pastel Light',
+    scheme: 'light',
     defaultFor: 'all',
     colors: {
       bg: 'oklch(0.97 0.015 350)',

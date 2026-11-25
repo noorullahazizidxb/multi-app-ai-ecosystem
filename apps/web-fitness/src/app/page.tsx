@@ -105,13 +105,13 @@ export default function KineticFitnessPage() {
       <AppShell appId="kinetic">
         <div className="flex flex-col gap-6">
           {/* Header Banner */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl border border-[--border] bg-[--surface]/60 backdrop-blur-sm">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl border border-border bg-surface/60 backdrop-blur-sm">
             <div>
               <div className="flex items-center gap-3">
-                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[--text]">KineticAI</h1>
+                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-text">KineticAI</h1>
                 <Badge variant="default">Model 1: 3 Free AI Scans/Wk</Badge>
               </div>
-              <p className="text-xs sm:text-sm text-[--text-muted] mt-1">
+              <p className="text-xs sm:text-sm text-text-muted mt-1">
                 Intelligent Fitness, 30FPS Biomechanics Pose Coach & Autoregulation ($14/mo)
               </p>
             </div>
@@ -138,7 +138,7 @@ export default function KineticFitnessPage() {
                     <CardDescription>Keeps training pacing optimal between intense compound sets</CardDescription>
                   </CardHeader>
                   <CardContent className="flex flex-col items-center justify-center py-6 gap-4">
-                    <div className="text-6xl font-black font-mono text-[--primary]">
+                    <div className="text-6xl font-black font-mono text-primary">
                       {Math.floor(restSeconds / 60)}:{String(restSeconds % 60).padStart(2, '0')}
                     </div>
                     <Progress value={((timerInitial - restSeconds) / timerInitial) * 100} className="w-64" />
@@ -173,7 +173,7 @@ export default function KineticFitnessPage() {
                   <CardContent className="flex flex-col gap-3">
                     <div className="grid grid-cols-2 gap-2">
                       <div>
-                        <label className="text-xs text-[--text-muted]">Weight (kg):</label>
+                        <label className="text-xs text-text-muted">Weight (kg):</label>
                         <Input
                           type="number"
                           value={calcWeight}
@@ -181,7 +181,7 @@ export default function KineticFitnessPage() {
                         />
                       </div>
                       <div>
-                        <label className="text-xs text-[--text-muted]">Reps Completed:</label>
+                        <label className="text-xs text-text-muted">Reps Completed:</label>
                         <Input
                           type="number"
                           value={calcReps}
@@ -190,10 +190,10 @@ export default function KineticFitnessPage() {
                       </div>
                     </div>
 
-                    <div className="p-4 rounded-xl border border-[--border] bg-[--surface] flex justify-between items-center mt-2">
+                    <div className="p-4 rounded-xl border border-border bg-surface flex justify-between items-center mt-2">
                       <div>
-                        <span className="text-xs text-[--text-muted] block">Estimated 1RM:</span>
-                        <span className="text-3xl font-extrabold text-[--primary]">{oneRepMax} kg</span>
+                        <span className="text-xs text-text-muted block">Estimated 1RM:</span>
+                        <span className="text-3xl font-extrabold text-primary">{oneRepMax} kg</span>
                       </div>
                       <div className="text-right text-xs space-y-1">
                         <div>90% (Strength): <strong>{Math.round(oneRepMax * 0.9)} kg</strong></div>
@@ -220,7 +220,7 @@ export default function KineticFitnessPage() {
                       <CardDescription>Guarded by @UseQuota('MEAL_SCAN', 1)</CardDescription>
                     </CardHeader>
                     <CardContent className="flex flex-col gap-3">
-                      <div className="h-40 border-2 border-dashed border-[--border] rounded-xl flex flex-col items-center justify-center text-xs text-[--text-muted]">
+                      <div className="h-40 border-2 border-dashed border-border rounded-xl flex flex-col items-center justify-center text-xs text-text-muted">
                         📸 Drag & drop food snapshot or tap camera
                       </div>
                       <Button onClick={handleMealScan} disabled={loadingMeal}>
@@ -230,7 +230,7 @@ export default function KineticFitnessPage() {
                   </Card>
 
                   {mealScanned && (
-                    <Card className="border-[--primary]/40">
+                    <Card className="border-primary/40">
                       <CardHeader>
                         <div className="flex justify-between items-center">
                           <CardTitle>Nutritional Breakdown</CardTitle>
@@ -239,21 +239,21 @@ export default function KineticFitnessPage() {
                         <CardDescription>Detected: {mealScanned.identifiedFoods.join(', ')}</CardDescription>
                       </CardHeader>
                       <CardContent className="flex flex-col gap-4">
-                        <div className="text-4xl font-black text-[--primary] text-center">
-                          {mealScanned.calories} <span className="text-sm font-normal text-[--text-muted]">kcal</span>
+                        <div className="text-4xl font-black text-primary text-center">
+                          {mealScanned.calories} <span className="text-sm font-normal text-text-muted">kcal</span>
                         </div>
                         <div className="grid grid-cols-3 gap-2 text-center text-xs">
-                          <div className="p-3 rounded-lg bg-[--surface] border border-[--border]">
-                            <span className="block font-extrabold text-base text-[--accent]">{mealScanned.proteinGrams}g</span>
-                            <span className="text-[--text-muted]">Protein</span>
+                          <div className="p-3 rounded-lg bg-surface border border-border">
+                            <span className="block font-extrabold text-base text-accent">{mealScanned.proteinGrams}g</span>
+                            <span className="text-text-muted">Protein</span>
                           </div>
-                          <div className="p-3 rounded-lg bg-[--surface] border border-[--border]">
-                            <span className="block font-extrabold text-base text-[--warning]">{mealScanned.carbsGrams}g</span>
-                            <span className="text-[--text-muted]">Carbs</span>
+                          <div className="p-3 rounded-lg bg-surface border border-border">
+                            <span className="block font-extrabold text-base text-warning">{mealScanned.carbsGrams}g</span>
+                            <span className="text-text-muted">Carbs</span>
                           </div>
-                          <div className="p-3 rounded-lg bg-[--surface] border border-[--border]">
-                            <span className="block font-extrabold text-base text-[--error]">{mealScanned.fatGrams}g</span>
-                            <span className="text-[--text-muted]">Fat</span>
+                          <div className="p-3 rounded-lg bg-surface border border-border">
+                            <span className="block font-extrabold text-base text-error">{mealScanned.fatGrams}g</span>
+                            <span className="text-text-muted">Fat</span>
                           </div>
                         </div>
                       </CardContent>
@@ -266,7 +266,7 @@ export default function KineticFitnessPage() {
                       id: 'camera',
                     label: 'FR-2.4: 30FPS Form Coach (Copilot)',
                     content: (
-                    <Card className="mt-2 border-[--primary]/40 shadow-xl">
+                    <Card className="mt-2 border-primary/40 shadow-xl">
                       <CardHeader>
                         <div className="flex justify-between items-center">
                           <div>
@@ -277,27 +277,27 @@ export default function KineticFitnessPage() {
                         </div>
                           </CardHeader>
                           <CardContent className="flex flex-col lg:flex-row gap-6 items-center">
-                            <div className="w-full lg:w-1/2 h-64 rounded-xl border-2 border-[--primary] bg-black/80 flex flex-col items-center justify-center relative overflow-hidden">
+                            <div className="w-full lg:w-1/2 h-64 rounded-xl border-2 border-primary bg-black/80 flex flex-col items-center justify-center relative overflow-hidden">
                               {/* Skeletal simulation canvas */}
                               <div className="absolute inset-0 flex items-center justify-center opacity-60">
-                                <div className="w-32 h-48 border-2 border-dashed border-[--accent] rounded-full" />
+                                <div className="w-32 h-48 border-2 border-dashed border-accent rounded-full" />
                               </div>
                                 <div className="z-10 text-center text-white">
                                   <span className="text-4xl">🧘‍♂️</span>
-                                  <p className="font-mono text-xl font-bold mt-2 text-[--primary]">Angle: {liveSquatAngle}°</p>
+                                  <p className="font-mono text-xl font-bold mt-2 text-primary">Angle: {liveSquatAngle}°</p>
                                   <p className="text-xs text-gray-300">Target: &lt;= 90° for full depth</p>
                                 </div>
                               </div>
 
                       <div className="w-full lg:w-1/2 flex flex-col gap-4">
-                        <div className="p-4 rounded-xl border border-[--border] bg-[--surface]">
-                          <span className="text-xs text-[--text-muted] block">Reps Counted:</span>
-                          <span className="text-3xl font-black text-[--accent]">{repsDone} Reps</span>
+                        <div className="p-4 rounded-xl border border-border bg-surface">
+                          <span className="text-xs text-text-muted block">Reps Counted:</span>
+                          <span className="text-3xl font-black text-accent">{repsDone} Reps</span>
                         </div>
 
-                              <div className="p-4 rounded-xl border border-[--border] bg-[--surface]">
-                                <span className="text-xs text-[--text-muted] block">Real-time Audio Coaching Cue:</span>
-                                <span className="text-sm font-semibold text-[--success] block mt-1">"{formCue}"</span>
+                              <div className="p-4 rounded-xl border border-border bg-surface">
+                                <span className="text-xs text-text-muted block">Real-time Audio Coaching Cue:</span>
+                                <span className="text-sm font-semibold text-success block mt-1">"{formCue}"</span>
                               </div>
 
                                     <Button
@@ -319,7 +319,7 @@ export default function KineticFitnessPage() {
                       id: 'biometrics',
                     label: 'FR-2.5: Biometric Auto-Regulation',
                     content: (
-                    <Card className="mt-2 border-[--accent]/40">
+                    <Card className="mt-2 border-accent/40">
                       <CardHeader>
                         <div className="flex justify-between items-center">
                           <div>
@@ -332,7 +332,7 @@ export default function KineticFitnessPage() {
                       <CardContent className="flex flex-col gap-4">
                         <div className="grid grid-cols-2 gap-4">
                           <div>
-                            <label className="text-xs text-[--text-muted]">HRV (ms):</label>
+                            <label className="text-xs text-text-muted">HRV (ms):</label>
                             <Input
                               type="number"
                               value={hrvValue}
@@ -340,7 +340,7 @@ export default function KineticFitnessPage() {
                             />
                           </div>
                           <div>
-                            <label className="text-xs text-[--text-muted]">Sleep (Hours):</label>
+                            <label className="text-xs text-text-muted">Sleep (Hours):</label>
                             <Input
                               type="number"
                               step="0.5"
@@ -354,13 +354,13 @@ export default function KineticFitnessPage() {
                         </Button>
 
                   {readinessResult && (
-                  <div className="p-4 rounded-xl border border-[--border] bg-[--surface] flex flex-col gap-2 mt-2">
+                  <div className="p-4 rounded-xl border border-border bg-surface flex flex-col gap-2 mt-2">
                     <div className="flex justify-between items-center">
                       <span className="font-bold">Readiness Index: {readinessResult.readinessScore}/100</span>
                       <Badge variant="success">Intensity: {readinessResult.targetIntensity}</Badge>
                     </div>
-                    <p className="text-xs text-[--text-muted]">{readinessResult.guidanceNotes}</p>
-                    <div className="pt-2 border-t border-[--border] text-xs flex justify-between">
+                    <p className="text-xs text-text-muted">{readinessResult.guidanceNotes}</p>
+                    <div className="pt-2 border-t border-border text-xs flex justify-between">
                       <span>Daily Target Calories: <strong>{readinessResult.dailyMacroAdjustment.calories} kcal</strong></span>
                       <span>Protein: <strong>{readinessResult.dailyMacroAdjustment.proteinGrams}g</strong></span>
                     </div>

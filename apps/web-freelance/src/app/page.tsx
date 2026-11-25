@@ -113,13 +113,13 @@ export default function FreelanceOSPage() {
       <AppShell appId="freelanceos">
         <div className="flex flex-col gap-6">
           {/* Header Banner */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl border border-[--border] bg-[--surface]/60 backdrop-blur-sm">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 p-5 rounded-2xl border border-border bg-surface/60 backdrop-blur-sm">
             <div>
               <div className="flex items-center gap-3">
-                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[--text]">FreelanceOS</h1>
+                <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-text">FreelanceOS</h1>
                 <Badge variant="default">Model 1: 5 Free AI Docs/Mo</Badge>
               </div>
-              <p className="text-xs sm:text-sm text-[--text-muted] mt-1">
+              <p className="text-xs sm:text-sm text-text-muted mt-1">
                 Autonomous Client CRM, Scope-Creep Shield & Collections Agent ($24/mo)
               </p>
             </div>
@@ -141,10 +141,10 @@ export default function FreelanceOSPage() {
                       <div className="flex flex-col gap-6 mt-2">
                         {/* Time Tracker Stopwatch */}
                         <Card>
-                          <CardContent className="flex items-center justify-between py-4">
-                            <div className="flex items-center gap-4">
-                              <span className="text-3xl font-black font-mono text-[--primary]">{formatTime(seconds)}</span>
-                              <span className="text-xs text-[--text-muted]">Active Client: Acme Corp ($95/hr)</span>
+                          <CardContent className="flex flex-wrap items-center justify-between gap-4 py-4">
+                            <div className="flex flex-wrap items-center gap-x-4 gap-y-1">
+                              <span className="text-3xl font-black font-mono text-primary">{formatTime(seconds)}</span>
+                              <span className="text-xs text-text-muted">Active Client: Acme Corp ($95/hr)</span>
                             </div>
                             <Button
                               size="sm"
@@ -159,8 +159,8 @@ export default function FreelanceOSPage() {
                             {/* Kanban Columns */}
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                               {['TODO', 'IN_PROGRESS', 'DONE'].map((column) => (
-                                <div key={column} className="p-4 rounded-xl border border-[--border] bg-[--surface] flex flex-col gap-3">
-                                  <div className="flex justify-between items-center pb-2 border-b border-[--border]">
+                                <div key={column} className="p-4 rounded-xl border border-border bg-surface flex flex-col gap-3">
+                                  <div className="flex justify-between items-center pb-2 border-b border-border">
                                     <span className="font-bold text-xs">{column.replace('_', ' ')}</span>
                                     <Badge variant="outline">{tasks.filter((t) => t.status === column).length}</Badge>
                                   </div>
@@ -168,9 +168,9 @@ export default function FreelanceOSPage() {
                                     {tasks
                                       .filter((t) => t.status === column)
                                       .map((task) => (
-                                        <div key={task.id} className="p-3 rounded-lg border border-[--border] bg-[--bg] text-xs">
-                                          <p className="font-semibold text-[--text]">{task.title}</p>
-                                          <span className="text-[10px] text-[--text-muted]">{task.client}</span>
+                                        <div key={task.id} className="p-3 rounded-lg border border-border bg-bg text-xs">
+                                          <p className="font-semibold text-text">{task.title}</p>
+                                          <span className="text-[10px] text-text-muted">{task.client}</span>
                                         </div>
                                       ))}
                                   </div>
@@ -211,23 +211,23 @@ export default function FreelanceOSPage() {
           </Card>
 
                   {contractCreated && (
-                    <Card className="border-[--primary]/40">
+                    <Card className="border-primary/40">
                       <CardHeader>
                         <CardTitle>{contractCreated.title}</CardTitle>
                         <CardDescription>Rate: {contractCreated.hourlyRate}</CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-3 text-xs">
                         <div>
-                          <strong className="text-[--primary] block mb-1">Scope Deliverables:</strong>
-                          <ul className="list-disc pl-4 space-y-0.5 text-[--text-muted]">
+                          <strong className="text-primary block mb-1">Scope Deliverables:</strong>
+                          <ul className="list-disc pl-4 space-y-0.5 text-text-muted">
                             {contractCreated.deliverables.map((d: string) => (
                               <li key={d}>{d}</li>
                             ))}
                           </ul>
                         </div>
-                        <div className="pt-2 border-t border-[--border]">
-                          <strong className="text-[--accent] block mb-1">Standard Legal Protections:</strong>
-                          <p className="text-[--text-muted]">{contractCreated.clauses.join(' • ')}</p>
+                        <div className="pt-2 border-t border-border">
+                          <strong className="text-accent block mb-1">Standard Legal Protections:</strong>
+                          <p className="text-text-muted">{contractCreated.clauses.join(' • ')}</p>
                         </div>
                       </CardContent>
                     </Card>
@@ -239,7 +239,7 @@ export default function FreelanceOSPage() {
                       id: 'shield',
                     label: 'FR-3.4: Scope-Creep Shield (Copilot)',
                     content: (
-                    <Card className="mt-2 border-[--warning]/40 shadow-xl">
+                    <Card className="mt-2 border-warning/40 shadow-xl">
                       <CardHeader>
                         <div className="flex justify-between items-center">
                           <div>
@@ -251,11 +251,11 @@ export default function FreelanceOSPage() {
                       </CardHeader>
                       <CardContent className="flex flex-col gap-4">
                         <div>
-                          <label className="text-xs text-[--text-muted]">Incoming Client Communication:</label>
+                          <label className="text-xs text-text-muted">Incoming Client Communication:</label>
                           <textarea
                             value={clientMessage}
                             onChange={(e) => setClientMessage(e.target.value)}
-                            className="w-full h-24 rounded-md border border-[--border] bg-[--bg] p-3 text-xs text-[--text]"
+                            className="w-full h-24 rounded-md border border-border bg-bg p-3 text-xs text-text"
                           />
                         </div>
                         <Button onClick={handleScopeAnalysis} disabled={loadingScope}>
@@ -263,19 +263,19 @@ export default function FreelanceOSPage() {
                         </Button>
 
                             {scopeAnalysis && (
-                    <div className="p-4 rounded-xl border border-[--border] bg-[--surface] flex flex-col gap-3">
+                    <div className="p-4 rounded-xl border border-border bg-surface flex flex-col gap-3">
                       <div className="flex justify-between items-center">
                         <Badge variant="destructive">⚠️ {scopeAnalysis.deviationPercent}% Scope Creep Detected</Badge>
-                        <span className="text-xs text-[--warning] font-bold">Uncontracted Work</span>
+                        <span className="text-xs text-warning font-bold">Uncontracted Work</span>
                       </div>
-                      <p className="text-xs text-[--text-muted]">{scopeAnalysis.explanation}</p>
+                      <p className="text-xs text-text-muted">{scopeAnalysis.explanation}</p>
 
-                      <div className="p-4 rounded-lg bg-[--bg] border border-[--border] flex flex-col gap-2">
-                        <div className="flex justify-between font-bold text-xs text-[--primary]">
+                      <div className="p-4 rounded-lg bg-bg border border-border flex flex-col gap-2">
+                        <div className="flex justify-between font-bold text-xs text-primary">
                           <span>{scopeAnalysis.changeOrder.title}</span>
                           <span>{scopeAnalysis.changeOrder.quote}</span>
                         </div>
-                        <p className="text-xs text-[--text-muted] italic">"{scopeAnalysis.changeOrder.politeEmail}"</p>
+                        <p className="text-xs text-text-muted italic">"{scopeAnalysis.changeOrder.politeEmail}"</p>
                       </div>
                     </div>
                             )}
@@ -287,7 +287,7 @@ export default function FreelanceOSPage() {
                           id: 'collections',
                         label: 'FR-3.5: Autonomous Collections Agent',
                         content: (
-                        <Card className="mt-2 border-[--primary]/40">
+                        <Card className="mt-2 border-primary/40">
                           <CardHeader>
                             <div className="flex justify-between items-center">
                               <div>
@@ -302,13 +302,13 @@ export default function FreelanceOSPage() {
                 {invoices.map((inv) => (
                   <div
                     key={inv.id}
-                    className="flex items-center justify-between p-4 rounded-lg border border-[--border] bg-[--surface]"
+                    className="flex flex-wrap items-center justify-between gap-3 p-4 rounded-lg border border-border bg-surface"
                   >
                     <div>
                       <p className="font-bold text-sm">{inv.client} ({inv.amount})</p>
-                      <p className="text-xs text-[--text-muted]">{inv.due} • {inv.chases} Reminders Sent</p>
+                      <p className="text-xs text-text-muted">{inv.due} • {inv.chases} Reminders Sent</p>
                     </div>
-                    <div className="flex items-center gap-3">
+                    <div className="flex flex-wrap items-center gap-3">
                       <Badge variant={inv.status === 'CHASING' ? 'destructive' : 'default'}>{inv.status}</Badge>
                       <Button size="sm" onClick={() => triggerChase(inv.id)}>
                         Dispatch Stripe Reminder

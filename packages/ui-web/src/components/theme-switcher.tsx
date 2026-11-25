@@ -56,10 +56,10 @@ export function ThemeSwitcher({
   }, []);
 
   return (
-    <div className={cn('flex flex-col gap-3 p-4 rounded-xl border border-[--border] bg-[--surface]', className)}>
+    <div className={cn('flex flex-col gap-3 p-4 rounded-xl border border-border bg-surface', className)}>
       <div className="flex items-center justify-between">
-        <span className="text-sm font-semibold text-[--text]">Theme Persona</span>
-        <span className="text-xs text-[--text-muted]">10 OKLCH Presets</span>
+        <span className="text-sm font-semibold text-text">Theme Persona</span>
+        <span className="text-xs text-text-muted">10 OKLCH Presets</span>
       </div>
       <div className="grid grid-cols-2 sm:grid-cols-5 gap-2">
         {PRESET_OPTIONS.map((preset) => (
@@ -70,8 +70,8 @@ export function ThemeSwitcher({
             className={cn(
               'flex flex-col items-center gap-1.5 p-2 rounded-lg border text-left transition-all cursor-pointer',
               selected === preset.id
-                ? 'border-[--primary] ring-2 ring-[--primary]/20 bg-[--bg]'
-                : 'border-[--border] hover:bg-[--bg]',
+                ? 'border-primary ring-2 ring-primary/20 bg-bg'
+                : 'border-border hover:bg-bg',
             )}
             title={`${preset.name} - ${preset.persona}`}
           >
@@ -79,7 +79,7 @@ export function ThemeSwitcher({
               className="w-6 h-6 rounded-full border border-black/10 shadow-sm"
               style={{ backgroundColor: preset.previewColor }}
             />
-            <span className="text-xs font-medium text-[--text] truncate w-full text-center">
+            <span className="text-xs font-medium text-text truncate w-full text-center">
               {preset.name}
             </span>
           </button>
