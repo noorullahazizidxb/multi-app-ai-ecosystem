@@ -48,6 +48,25 @@ class _ViralMatrixHomeScreenState extends State<ViralMatrixHomeScreen> {
   bool _isPlaying = true;
   bool _showCaptions = true;
 
+  final _urlCtrl = TextEditingController(text: 'https://youtube.com/watch?v=saas-2026');
+  List<String> _hooks = [
+    'Stop bundling 4 AI products into one slow monolith. Here is why:',
+    'How we shared 80% DRY TypeScript + Flutter code across 4 apps:',
+  ];
+
+  final List<Map<String, String>> _channels = [
+    {'name': 'TikTok (@viralmatrix)', 'slot': '18:00 UTC Peak', 'status': 'QUEUED'},
+    {'name': 'YouTube Shorts', 'slot': '18:15 UTC Peak', 'status': 'QUEUED'},
+    {'name': 'Instagram Reels', 'slot': '19:00 UTC', 'status': 'QUEUED'},
+    {'name': 'X / Twitter', 'slot': '18:00 UTC Peak', 'status': 'QUEUED'},
+  ];
+
+  @override
+  void dispose() {
+    _urlCtrl.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
@@ -74,14 +93,14 @@ class _ViralMatrixHomeScreenState extends State<ViralMatrixHomeScreen> {
                 children: [
                   Container(
                     width: 240,
-                    height: 420,
+                    height: 410,
                     decoration: BoxDecoration(
                       color: Colors.black,
                       borderRadius: BorderRadius.circular(20),
                       border: Border.all(color: theme.colorScheme.primary, width: 3),
                       boxShadow: [
                         BoxShadow(
-                          color: theme.colorScheme.primary.withOpacity(0.3),
+                          color: theme.colorScheme.primary.withValues(alpha: 0.3),
                           blurRadius: 16,
                           spreadRadius: 2,
                         ),
@@ -96,11 +115,11 @@ class _ViralMatrixHomeScreenState extends State<ViralMatrixHomeScreen> {
                             color: theme.colorScheme.primary,
                           ),
                         ),
-                        Positioned(
+                        const Positioned(
                           top: 12,
                           left: 12,
                           child: Chip(
-                            label: const Text('9:16 Reframed', style: TextStyle(fontSize: 10, color: Colors.white)),
+                            label: Text('9:16 Reframed', style: TextStyle(fontSize: 10, color: Colors.white)),
                             backgroundColor: Colors.black54,
                           ),
                         ),
@@ -110,7 +129,7 @@ class _ViralMatrixHomeScreenState extends State<ViralMatrixHomeScreen> {
                             left: 12,
                             right: 12,
                             child: Container(
-                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
                               decoration: BoxDecoration(
                                 color: Colors.black87,
                                 borderRadius: BorderRadius.circular(8),
@@ -130,15 +149,14 @@ class _ViralMatrixHomeScreenState extends State<ViralMatrixHomeScreen> {
                     ),
                   ),
                   const SizedBox(height: 16),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Wrap(
+                    spacing: 12,
                     children: [
                       ElevatedButton.icon(
                         icon: Icon(_isPlaying ? Icons.pause : Icons.play_arrow),
                         label: Text(_isPlaying ? 'Pause' : 'Play'),
                         onPressed: () => setState(() => _isPlaying = !_isPlaying),
                       ),
-                      const SizedBox(width: 12),
                       OutlinedButton.icon(
                         icon: Icon(_showCaptions ? Icons.subtitles_off : Icons.subtitles),
                         label: Text(_showCaptions ? 'Hide Captions' : 'Show Captions'),
@@ -151,16 +169,76 @@ class _ViralMatrixHomeScreenState extends State<ViralMatrixHomeScreen> {
             ),
           ),
 
-          // Tab 1: Omnichannel Schedules
+          // Tab 1: FR-4.1 Repurposer
+          SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    Text('FR-4.1: Video to Social Hooks', style: theme.textTheme.titleMedium),
+                    const SizedBox(height: 10),
+                    TextField(
+                      controller: _urlCtrl,
+                      decoration: const InputDecoration(labelText: 'YouTube URL', border: OutlineInputBorder()),
+                    ),
+                    const SizedBox(height: 12),
+                    ElevatedButton(
+                      onPressed: () {
+                        setState(() {
+                          _hooks = [
+                            '5 Architecture Rules Every AI SaaS Founder Needs in 2026:',
+                            'Why Isolated NestJS Containers Beat Monoliths Under FFmpeg Load:',
+                            'How Redis Lua Rate Limiting Protects Your Gemini API Budget:',
+                          ];
+                        });
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Synthesized viral hooks & X thread!')),
+                        );
+                      },
+                      child: const Text('Synthesize Hooks & Thread'),
+                    ),
+                    const SizedBox(height: 12),
+                    ..._hooks.asMap().entries.map(
+                          (e) => ListTile(
+                            dense: true,
+                            leading: CircleAvatar(radius: 12, child: Text('${e.key + 1}')),
+                            title: Text(e.value),
+                          ),
+                        ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          // Tab 2: FR-4.4 Omnichannel Auto-Publisher
           ListView(
             padding: const EdgeInsets.all(16.0),
             children: [
-              Card(
-                child: ListTile(
-                  leading: const Icon(Icons.share, color: Colors.purpleAccent),
-                  title: const Text('FR-4.4: Omnichannel Auto-Publisher'),
-                  subtitle: const Text('TikTok, Shorts, Reels & X scheduled for 18:00 UTC'),
-                  trailing: const Icon(Icons.check_circle, color: Colors.green),
+              ElevatedButton.icon(
+                icon: const Icon(Icons.send),
+                label: const Text('Publish All Channels Now'),
+                onPressed: () {
+                  setState(() {
+                    for (final c in _channels) {
+                      c['status'] = 'PUBLISHED';
+                    }
+                  });
+                },
+              ),
+              const SizedBox(height: 12),
+              ..._channels.map(
+                (c) => Card(
+                  margin: const EdgeInsets.only(bottom: 8),
+                  child: ListTile(
+                    leading: const Icon(Icons.share),
+                    title: Text(c['name']!),
+                    subtitle: Text(c['slot']!),
+                    trailing: Chip(label: Text(c['status']!)),
+                  ),
                 ),
               ),
             ],
@@ -172,7 +250,8 @@ class _ViralMatrixHomeScreenState extends State<ViralMatrixHomeScreen> {
         onDestinationSelected: (idx) => setState(() => _navIndex = idx),
         destinations: const [
           NavigationDestination(icon: Icon(Icons.videocam), label: '9:16 Player'),
-          NavigationDestination(icon: Icon(Icons.schedule), label: 'Publishing'),
+          NavigationDestination(icon: Icon(Icons.auto_awesome), label: 'Repurpose'),
+          NavigationDestination(icon: Icon(Icons.schedule), label: 'Publish'),
         ],
       ),
     );

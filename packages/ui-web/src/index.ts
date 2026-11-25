@@ -35,6 +35,22 @@ export type { DialogProps } from './components/dialog';
 export { Progress } from './components/progress';
 export type { ProgressProps } from './components/progress';
 
+export { ToastProvider, useToast } from './components/toast';
+export type { ToastMessage, ToastVariant } from './components/toast';
+
+export {
+  useAppMonetization,
+  CopilotUpgradeDialog,
+  AppHeroHeader,
+  CopilotGateBanner,
+} from './components/quota-copilot';
+export type {
+  AppMonetizationSpec,
+  CopilotUpgradeDialogProps,
+  AppHeroHeaderProps,
+  CopilotGateBannerProps,
+} from './components/quota-copilot';
+
 // Appearance & Layout Management (SYS-THM-07 & Workspace Customization)
 export { LayoutProvider, useLayout, LayoutManager } from './components/layout-manager';
 export type {

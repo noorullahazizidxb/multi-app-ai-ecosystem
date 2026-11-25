@@ -7,6 +7,34 @@
 
 @layer base {
   body {
-    @apply min-h-screen bg-bg font-sans text-text antialiased;
+    @apply min-h-screen bg-bg font-sans text-text antialiased selection:bg-primary/20 selection:text-text;
+  }
+}
+
+/* Workspace density tokens driven by LayoutManager */
+:root[data-density="compact"] .workspace-main {
+  padding: 0.75rem 1rem;
+}
+:root[data-density="spacious"] .workspace-main {
+  padding: 2rem 2.5rem;
+}
+
+/* Surface styling variants driven by LayoutManager */
+:root[data-surface-style="clean"] .ui-card {
+  box-shadow: none;
+  backdrop-filter: none;
+}
+:root[data-surface-style="glass"] .ui-card {
+  background-color: color-mix(in oklch, var(--surface) 88%, transparent);
+  backdrop-filter: blur(12px);
+}
+:root[data-surface-style="bordered"] .ui-card {
+  border-width: 2px;
+  box-shadow: none;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
   }
 }

@@ -4,10 +4,11 @@ import * as React from 'react';
 import { Card, CardHeader, CardTitle, CardContent } from './card';
 import { Badge } from './badge';
 import { Button } from './button';
+import { Input } from './input';
 import { cn } from '../lib/utils';
 
 export interface AdminTelemetryEvent {
-  type: 'QUOTA_HIT' | 'COPILOT_SUBSCRIBED' | 'AI_LATENCY_MS' | 'ACTIVE_USERS' | 'MAINTENANCE_TOGGLE';
+  type: 'QUOTA_HIT' | 'COPILOT_SUBSCRIBED' | 'AI_LATENCY_MS' | 'ACTIVE_USERS' | 'MAINTENANCE_TOGGLE' | 'QUOTA_OVERRIDE';
   appId: string;
   userId?: string;
   data: Record<string, unknown>;
@@ -48,6 +49,8 @@ export function AdminDashboard({
 }: AdminDashboardProps) {
   const [events, setEvents] = React.useState<AdminTelemetryEvent[]>(initialEvents);
   const [maintenance, setMaintenance] = React.useState(false);
+  const [overrideUserId, setOverrideUserId] = React.useState('usr_892k1');
+  const [overrideQuotaCap, setOverrideQuotaCap] = React.useState('10');
 
   const toggleMaintenance = () => {
     const nextState = !maintenance;
@@ -61,13 +64,25 @@ export function AdminDashboard({
     setEvents((prev) => [newEvent, ...prev]);
   };
 
+  const emitQuotaOverride = () => {
+    if (!overrideUserId.trim()) return;
+    const newEvent: AdminTelemetryEvent = {
+      type: 'QUOTA_OVERRIDE',
+      appId,
+      userId: overrideUserId.trim(),
+      data: { newMonthlyCap: Number(overrideQuotaCap) || 10 },
+      timestamp: new Date().toISOString(),
+    };
+    setEvents((prev) => [newEvent, ...prev]);
+  };
+
   return (
     <div className={cn('flex flex-col gap-6', className)}>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-text">Admin Telemetry</h2>
           <p className="text-sm text-text-muted">
-            Real-time WebSocket & Redis Quota Oversight for {appId}
+            Real-time WebSocket &amp; Redis Quota Oversight for {appId}
           </p>
         </div>
         <div className="flex flex-wrap items-center gap-3">
@@ -116,6 +131,31 @@ export function AdminDashboard({
         </Card>
       </div>
 
+      {/* Remote Quota Override (SYS-ADM-08) */}
+      <Card>
+        <CardHeader>
+          <CardTitle className="text-base">Remote User Quota Override (/admin-ws)</CardTitle>
+        </CardHeader>
+        <CardContent className="flex flex-wrap items-center gap-3">
+          <Input
+            value={overrideUserId}
+            onChange={(e) => setOverrideUserId(e.target.value)}
+            placeholder="Target User ID"
+            className="w-48"
+          />
+          <Input
+            type="number"
+            value={overrideQuotaCap}
+            onChange={(e) => setOverrideQuotaCap(e.target.value)}
+            placeholder="New Free Quota Cap"
+            className="w-36"
+          />
+          <Button size="sm" onClick={emitQuotaOverride}>
+            Emit Quota Override
+          </Button>
+        </CardContent>
+      </Card>
+
       <Card>
         <CardHeader>
           <CardTitle>Live Event Stream (/admin-ws)</CardTitle>
@@ -135,9 +175,9 @@ export function AdminDashboard({
                   <div className="flex min-w-0 flex-wrap items-center gap-x-3 gap-y-1">
                     <Badge
                       variant={
-                        evt.type === 'QUOTA_HIT'
+                        evt.type === 'QUOTA_HIT' || evt.type === 'MAINTENANCE_TOGGLE'
                           ? 'destructive'
-                          : evt.type === 'COPILOT_SUBSCRIBED'
+                          : evt.type === 'COPILOT_SUBSCRIBED' || evt.type === 'QUOTA_OVERRIDE'
                             ? 'success'
                             : 'default'
                       }
@@ -148,6 +188,9 @@ export function AdminDashboard({
                     {evt.userId && (
                       <span className="text-xs text-text-muted font-mono">{evt.userId}</span>
                     )}
+                    <span className="text-xs text-text-muted font-mono">
+                      {JSON.stringify(evt.data)}
+                    </span>
                   </div>
                   <EventTime timestamp={evt.timestamp} />
                 </div>
@@ -159,4 +202,3 @@ export function AdminDashboard({
     </div>
   );
 }
-

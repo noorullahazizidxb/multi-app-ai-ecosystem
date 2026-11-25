@@ -50,11 +50,24 @@ class _FreelanceHomeScreenState extends State<FreelanceHomeScreen> {
   bool _timerActive = false;
   Timer? _timer;
 
+  final List<Map<String, String>> _tasks = [
+    {'title': 'Implement Stripe Webhook', 'client': 'Fintech Inc', 'status': 'IN_PROGRESS'},
+    {'title': 'Draft SOW Deliverables', 'client': 'Acme Corp', 'status': 'TODO'},
+    {'title': 'Setup Turborepo CI', 'client': 'Acme Corp', 'status': 'DONE'},
+  ];
+
+  final List<Map<String, String>> _receipts = [
+    {'vendor': 'JetBrains All Products', 'category': 'Software', 'amount': '\$289.00'},
+    {'vendor': 'Vercel Pro Hosting', 'category': 'Cloud Infra', 'amount': '\$20.00'},
+  ];
+
+  String _scopeFeedback = 'Tap "Audit Client Message" to detect SOW scope drift.';
+
   void _toggleTimer() {
     setState(() => _timerActive = !_timerActive);
     if (_timerActive) {
       _timer = Timer.periodic(const Duration(seconds: 1), (_) {
-        setState(() => _seconds += 1);
+        if (mounted) setState(() => _seconds += 1);
       });
     } else {
       _timer?.cancel();
@@ -77,6 +90,7 @@ class _FreelanceHomeScreenState extends State<FreelanceHomeScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    final accrued = ((_seconds / 3600) * 125).toStringAsFixed(2);
 
     return Scaffold(
       appBar: AppBar(
@@ -91,8 +105,8 @@ class _FreelanceHomeScreenState extends State<FreelanceHomeScreen> {
       body: IndexedStack(
         index: _navIndex,
         children: [
-          // Tab 0: Time Tracker & Kanban
-          Padding(
+          // Tab 0: Time Tracker & Interactive Kanban
+          SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -102,17 +116,18 @@ class _FreelanceHomeScreenState extends State<FreelanceHomeScreen> {
                     padding: const EdgeInsets.all(16.0),
                     child: Column(
                       children: [
-                        const Text('FR-3.1: Offline Time Tracker', style: TextStyle(fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 12),
+                        const Text('FR-3.1: Offline Billable Tracker', style: TextStyle(fontWeight: FontWeight.bold)),
+                        const SizedBox(height: 10),
                         Text(
                           _formatTime(),
                           style: TextStyle(
-                            fontSize: 44,
+                            fontSize: 42,
                             fontWeight: FontWeight.bold,
                             fontFamily: 'monospace',
                             color: theme.colorScheme.primary,
                           ),
                         ),
+                        Text('Accrued: \$$accrued @ \$125/hr', style: theme.textTheme.bodySmall),
                         const SizedBox(height: 12),
                         ElevatedButton.icon(
                           icon: Icon(_timerActive ? Icons.stop : Icons.play_arrow),
@@ -123,21 +138,32 @@ class _FreelanceHomeScreenState extends State<FreelanceHomeScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 16),
-                Card(
-                  child: ListTile(
-                    leading: Icon(Icons.shield, color: theme.colorScheme.secondary),
-                    title: const Text('FR-3.4: Scope-Creep Shield'),
-                    subtitle: const Text('Audit client email against contract SOW'),
-                    trailing: const Icon(Icons.chevron_right),
-                  ),
-                ),
+                const SizedBox(height: 12),
+                ..._tasks.asMap().entries.map((entry) {
+                  final idx = entry.key;
+                  final t = entry.value;
+                  return Card(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    child: ListTile(
+                      title: Text(t['title']!),
+                      subtitle: Text(t['client']!),
+                      trailing: ActionChip(
+                        label: Text(t['status']!),
+                        onPressed: () {
+                          const order = ['TODO', 'IN_PROGRESS', 'DONE'];
+                          final next = order[(order.indexOf(t['status']!) + 1) % order.length];
+                          setState(() => _tasks[idx]['status'] = next);
+                        },
+                      ),
+                    ),
+                  );
+                }),
               ],
             ),
           ),
 
           // Tab 1: Receipt OCR
-          Padding(
+          SingleChildScrollView(
             padding: const EdgeInsets.all(16.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -148,21 +174,89 @@ class _FreelanceHomeScreenState extends State<FreelanceHomeScreen> {
                     child: Column(
                       children: [
                         const Text('FR-3.3: Mobile Receipt OCR', style: TextStyle(fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 12),
-                        const Icon(Icons.receipt_long, size: 64),
-                        const SizedBox(height: 8),
+                        const SizedBox(height: 10),
+                        const Icon(Icons.receipt_long, size: 52),
+                        const SizedBox(height: 6),
                         const Text('5 Free Mobile Receipt Scans / Month'),
-                        const SizedBox(height: 16),
+                        const SizedBox(height: 12),
                         ElevatedButton.icon(
                           icon: const Icon(Icons.camera_alt),
                           label: const Text('Capture Tax Deduction Receipt'),
                           onPressed: () {
+                            setState(() {
+                              _receipts.insert(0, {
+                                'vendor': 'AWS Cloud Services',
+                                'category': 'Infrastructure',
+                                'amount': '\$142.50',
+                              });
+                            });
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Receipt Scanned: \$142.50 (Software Subscription)')),
+                              const SnackBar(content: Text('Receipt Scanned: \$142.50 (Tax Deductible)')),
                             );
                           },
                         ),
                       ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                ..._receipts.map(
+                  (r) => Card(
+                    margin: const EdgeInsets.only(bottom: 8),
+                    child: ListTile(
+                      title: Text(r['vendor']!),
+                      subtitle: Text(r['category']!),
+                      trailing: Text(r['amount']!, style: const TextStyle(fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Tab 2: Scope-Creep Shield & Collections
+          SingleChildScrollView(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Card(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('FR-3.4: Scope-Creep Shield', style: theme.textTheme.titleMedium),
+                        const SizedBox(height: 8),
+                        Text(_scopeFeedback),
+                        const SizedBox(height: 12),
+                        ElevatedButton.icon(
+                          icon: const Icon(Icons.shield),
+                          label: const Text('Audit Client Message'),
+                          onPressed: () {
+                            setState(() {
+                              _scopeFeedback =
+                                  '85% Scope Deviation Detected! Suggested Change Order: 40 hrs (\$5,000 USD) for mobile companion build.';
+                            });
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 12),
+                Card(
+                  child: ListTile(
+                    leading: const Icon(Icons.payments),
+                    title: const Text('Venture Capital X (\$4,200)'),
+                    subtitle: const Text('Overdue by 5 days • 2 Reminders Sent'),
+                    trailing: ElevatedButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Dispatched Stripe pay-link reminder!')),
+                        );
+                      },
+                      child: const Text('Chase'),
                     ),
                   ),
                 ),
@@ -176,7 +270,8 @@ class _FreelanceHomeScreenState extends State<FreelanceHomeScreen> {
         onDestinationSelected: (idx) => setState(() => _navIndex = idx),
         destinations: const [
           NavigationDestination(icon: Icon(Icons.timer), label: 'Timer & Tasks'),
-          NavigationDestination(icon: Icon(Icons.document_scanner), label: 'Receipt OCR'),
+          NavigationDestination(icon: Icon(Icons.document_scanner), label: 'Receipts'),
+          NavigationDestination(icon: Icon(Icons.shield), label: 'Copilot'),
         ],
       ),
     );

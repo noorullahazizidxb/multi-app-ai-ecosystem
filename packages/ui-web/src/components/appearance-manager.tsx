@@ -5,7 +5,6 @@ import { cn } from '../lib/utils';
 import { PRESET_OPTIONS, ThemeSwitcher } from './theme-switcher';
 import { LayoutManager } from './layout-manager';
 import { Badge } from './badge';
-import { Button } from './button';
 
 export interface AppearanceManagerProps {
   currentTheme?: string;
@@ -22,6 +21,17 @@ export function AppearanceManager({
 }: AppearanceManagerProps) {
   const [activeTab, setActiveTab] = React.useState<'theme' | 'layout'>('theme');
   const [selectedTheme, setSelectedTheme] = React.useState(currentTheme);
+
+  React.useEffect(() => {
+    try {
+      const saved = localStorage.getItem('app-theme-preset');
+      const domTheme = document.documentElement.getAttribute('data-theme');
+      const resolved = saved || domTheme || currentTheme;
+      if (resolved && resolved !== selectedTheme) {
+        setSelectedTheme(resolved);
+      }
+    } catch {}
+  }, [currentTheme]);
 
   const handleThemeSelect = (themeId: string) => {
     setSelectedTheme(themeId);
@@ -52,35 +62,37 @@ export function AppearanceManager({
           </p>
         </div>
 
-        <div className="flex items-center gap-1.5 p-1 rounded-lg bg-bg border border-border self-start sm:self-auto">
-          <button
-            type="button"
-            onClick={() => setActiveTab('theme')}
-            className={cn(
-              'px-3 py-1 text-xs font-semibold rounded-md transition-all',
-              activeTab === 'theme'
-                ? 'bg-surface text-primary shadow-sm'
-                : 'text-text-muted hover:text-text',
-            )}
-          >
-            Theme & Colors
-          </button>
-          <button
-            type="button"
-            onClick={() => setActiveTab('layout')}
-            className={cn(
-              'px-3 py-1 text-xs font-semibold rounded-md transition-all',
-              activeTab === 'layout'
-                ? 'bg-surface text-primary shadow-sm'
-                : 'text-text-muted hover:text-text',
-            )}
-          >
-            Layout & Density
-          </button>
-        </div>
+        {showLayoutControls && (
+          <div className="flex items-center gap-1.5 p-1 rounded-lg bg-bg border border-border self-start sm:self-auto">
+            <button
+              type="button"
+              onClick={() => setActiveTab('theme')}
+              className={cn(
+                'px-3 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer',
+                activeTab === 'theme'
+                  ? 'bg-surface text-primary shadow-sm'
+                  : 'text-text-muted hover:text-text',
+              )}
+            >
+              Theme & Colors
+            </button>
+            <button
+              type="button"
+              onClick={() => setActiveTab('layout')}
+              className={cn(
+                'px-3 py-1 text-xs font-semibold rounded-md transition-all cursor-pointer',
+                activeTab === 'layout'
+                  ? 'bg-surface text-primary shadow-sm'
+                  : 'text-text-muted hover:text-text',
+              )}
+            >
+              Layout & Density
+            </button>
+          </div>
+        )}
       </div>
 
-      {activeTab === 'theme' ? (
+      {activeTab === 'theme' || !showLayoutControls ? (
         <div className="flex flex-col gap-4">
           {/* Active Preset Banner */}
           <div className="flex items-center justify-between p-3.5 rounded-xl border border-primary/30 bg-primary/5">
@@ -104,7 +116,7 @@ export function AppearanceManager({
               </div>
             </div>
             <div className="text-right hidden sm:block">
-              <span className="text-[11px] font-mono text-text-muted">data-theme="{activePreset.id}"</span>
+              <span className="text-[11px] font-mono text-text-muted">data-theme=&quot;{activePreset.id}&quot;</span>
             </div>
           </div>
 
